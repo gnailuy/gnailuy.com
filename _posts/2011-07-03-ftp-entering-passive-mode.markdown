@@ -4,6 +4,7 @@ title: "配置 iptables 后 FTP 停在 Entering Passive Mode 的问题"
 date: 2011-07-03 16:54:20
 categories: [ linux ]
 ---
+
 今天配置完 iptables 规则后，发现 FTP 无法使用了。
 通过 ftp 命令行的测试，发现可以发起连接并登录，然后客户端就会停滞在下面的提示上，直到超时：
 
