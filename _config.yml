@@ -11,3 +11,9 @@ authorMsg: Data Platform Engineer@Umeng
 authorEmail: jinyuliang@umeng.com
 authorNickname: gnailuy
 
+# Navigation Bar Items
+navItems:
+    - name: home
+      path: /
+    - name: about
+      path: /about
