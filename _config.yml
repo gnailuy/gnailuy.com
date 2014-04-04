@@ -18,5 +18,7 @@ urlAbout: /about
 navItems:
     - name: home
       url: /
+    - name: posts
+      url: /posts
     - name: about
       url: /about
