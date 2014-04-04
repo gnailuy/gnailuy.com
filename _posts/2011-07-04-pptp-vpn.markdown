@@ -1,0 +1,453 @@
+--- 
+layout: post
+title: "CentOS VPS 上搭建 PPTP VPN"
+date: 2011-07-04 05:53:02
+categories: [ linux ]
+---
+
+本文介绍在安装 CentOS 操作系统的 Xen VPS 上，如何搭建 PPTP VPN 服务。
+包括 PPTP 的安装、配置，以及相应的 iptables 规则。
+本文暂时不涉及 PPTP 流量控制的部分，等抽空学明白了 [FreeRADIUS][freeradius] 再来写续篇。
+**2011 年 7 月 20 日更新**：在**安全建议**这一部分，增加了使用不同的 IP 地址，分别提供 VPN 服务和 Web 等其他常规服务，以及使用不同 IP 地址时如何书写 iptables 规则的内容。
+
+<!-- more -->
+
+## 写在前面
+
+在 Godaddy 一美元 COM 域名的怂恿下，这几天先是拿到了这个 gnailuy.com，然后觊觎了很久的 VPS 也就顺便到手了。所以说万事嘛，总是要有个开端。
+
+按照之前的构想，下个月起这个 VPS 将由我和几个好朋友合租，配置虚拟主机，各自建立自己的小网站，还能合用 VPS 上的 VPN 服务。
+从成本上考虑，只要有些钻研技术的精神，加上几个志同道合的朋友，合租一台不太高端的 VPS 自建服务器，应该还是低于同时购买域名、Web 托管以及 VPN 这几样的成本之和的。
+这是第一个月，我们会先熟悉熟悉技术，做做各种测试，多学习多发些技术文章，供有同样想法的朋友们借鉴。
+
+## 正文
+
+在 Google 苦海里游了两天两夜，终于完成了 PPTP VPN 还有这个 Wordpress 小站的基本配置，今天先写一下 VPN。这些天因为嫌 Google 中文首页太丑，搜索资料的时候大都是用英文，本来也打算用英文写这篇文章，但考虑到下面两个原因，于是作罢：
+一是到自己这英语写作能力，实在不济；
+二是可能热衷于搭建 VPN 的个人或者团体，大概也许基本都是在中国大陆上网的吧，o(∩∩)o...
+
+之所以选择 PPTP VPN，是考虑到客户端连接起来会比较方便。我们几个人主要都是在 Linux Desktop, Windows 还有 Android 上使用 VPN，这些终端原生都有连接 PPTP 的客户端。
+当然还有一个原因，就是我们购买的 VPS 是基于 Xen PV 技术的，可以搭建 PPTP。
+这个原因本来其实是结果，当初要买基于 Xen PV 的而不是 OpenVZ 的，就是因为打算在上面搭建 PPTP 服务。
+BTW，Xen PV 是种半虚拟化技术，不能跑 Windows，但据说比全虚拟化的 Xen HVM 跑 Linux 效率高。
+
+### 平台简介
+
+我买的服务配置如下：
+
+* "硬"件平台：Xen PV, 215M Memory, 512M Swap, 1T Transfer
+* 操作系统：CentOS release 5.6 (Final)
+* 内核：2.6.18-194.32.1.el5xen i686 i386 GNU/Linux
+* 网络：2 IP, 2 Network Adapter(eth0)
+
+### 配置概览
+
+PPTP 的配置主要有下面五个步骤：
+
+* 验证内核是否加载了 MPPE 模块
+* 安装所需的软件包
+* 配置 PPP 和 PPTP 的配置文件
+* 打开内核的 IP 转发功能
+* 启动 pptpd 守护进程
+* 配置 iptables 防火墙放行和转发规则
+
+### 详细步骤
+
+开机以后，首先是登录 VPS。我平时用 Linux，就直接 ssh 命令登录上去。
+如果是在 Winodws 下，推荐使用 [PuTTY][putty]，有一点需要注意，就是连接之前最好把字符集设置成 UTF-8，因为 Linux 默认的 locale 都是 UTF-8 了，如果出现非 ASCII 字符，不设置字符集就会出现乱码，具体的设置方法 Google 知道。
+
+下面的所有配置操作都需要 root 权限，如无特别说明，所有命令都在 root 的家目录下执行。顺便，最好在 VPS 上禁用 root 直接登录，尽量建立一个普通用户然后 su 到 root，具体细节偏题了，也请自行 Google。
+
+#### 1、验证内核是否加载了MPPE模块：
+
+内核的 MPPE 模块用于支持 Microsoft Point-to-Point Encryption。
+Windows 自带的 VPN 客户端就是使用这种加密方式，主流的 Linux Desktop 也都有 MPPE 支持。其实到了我们这个内核版本，默认就已经加载了 MPPE，只需要使用下面命令验证一下，显示 MPPE ok 即可：
+
+{% highlight bash %}
+modprobe ppp-compress-18 && echo MPPE is ok
+{% endhighlight %}
+
+#### 2、安装所需的软件包：
+
+##### --ppp--
+
+PPTP 使用 PPP 协议对用户数据进行封装，然后将 PPP 数据帧封装在 IP 数据报里，经由 IP 网络传播。因此首先需要支持 PPP 协议，我们使用的完整版 CentOS 已经自带了 ppp 这个软件包，如果你安装的是 Minial CentOS 之类的精简系统，则可能需要下面命令安装 ppp：
+
+{% highlight bash %}
+yum install ppp
+{% endhighlight %}
+
+作为一个懒人，如果没有特殊的自定义要求，我一般尽量用 yum 安装软件。只要软件源里有，yum 比较方便一些，还能自动解决依赖关系。
+
+##### --pptpd--
+
+有了 PPP 协议支持，接下来安装 pptpd。
+首先到 [这里][pptpd] 找到最新版适合你的平台的 pptpd。
+CentOS 与 RHEL 通用，Fedora 系统则可以使用后缀含 fc 字样的包，然后还需要根据内核选择 32 位或者 64 位的包。
+找到正确的软件包以后，复制其 URL，然后用 wget 下载到 root 的家目录（**或者**用 `rpm -ivh URL` 直接安装也行）。譬如我的 32 位内核 CentOS 5，使用下面命令下载：
+
+{% highlight bash %}
+wget http://poptop.sourceforge.net/yum/stable/packages/pptpd-1.3.4-2.rhel5.i386.rpm
+{% endhighlight %}
+
+这篇文章默认不考虑 "wget: command not found" 此类初级的错误。
+如果看到类似错误，一是检查命令有没有拼错，二是 `yum install it`，三是 Google it。
+其实，这篇文章里总共也用不到几条容易 Not Found 的命令。
+
+下载完成后，安装：
+
+{% highlight bash %}
+rpm -ivh pptpd-1.3.4-2.rhel5.i386.rpm
+{% endhighlight %}
+
+##### --iptables--
+
+同样，如果不是 Minial 的系统，应该不会没有安装 iptables。
+这是 Linux 下最流行的防火墙，默认应该就能找到，如果没有，则：
+
+{% highlight bash %}
+yum install iptables
+{% endhighlight %}
+
+然后像是 iptables 这样的软件，对服务器非常重要。
+虽然还没有配置防火墙的规则，装完就打开吧（只要默认放行 ssh 的 22 端口就没问题），打开以后还需要设置一下，在主要的运行级别自动启动：
+
+{% highlight bash %}
+/etc/init.d/iptables start
+chkconfig --level 35 iptables on
+{% endhighlight %}
+
+#### 3、配置PPP和PPTP的配置文件：
+
+接下来需要对 ppp 和 pptpd 进行配置，编辑它们的几个配置文件。
+如果有 Linux 基础的话，当然推荐使用 vi/vim 来编辑配置文件。如果不熟悉也不想熟悉 vi，那么可以用更容易上手的 nano 替换下面我将要使用的 vi 命令。
+本文不涉及文本编辑器的基础知识，只需要知道如何打开文件、编辑文件、保存文件和退出文本编辑器就可以了。
+
+这些配置文件中，# 号开头的行均为注释，对配置不起作用。我们不必关心注释，所以下面我将使用类似
+
+{% highlight bash %}
+grep ^[^#] /etc/ppp/options.pptpd
+{% endhighlight %}
+
+这样的命令，过滤出配置文件中有效的行显示在本文正文中。你在编辑的时候，只需要添加或修改这些有效的行，把不需要的行前面加上 # 号注释掉即可。
+
+##### --ppp--
+
+配置 ppp 需要编辑它的两个配置文件，一个是 option（选项）文件，一个是用户账户文件。
+首先编辑option文件：
+
+{% highlight bash %}
+vi /etc/ppp/options.pptpd
+{% endhighlight %}
+
+我编辑这个文件时，它已经是存在的，并且其中的内容也几乎不需要编辑，如果这个文件不存在，自行创建它并填入下面的有效配置就行了。下面是这个文件中有效的行：
+
+{% highlight text linenos %}
+name pptpd
+refuse-pap
+refuse-chap
+refuse-mschap
+require-mschap-v2
+require-mppe-128
+ms-dns 8.8.8.8
+ms-dns 8.8.4.4
+proxyarp
+lock
+nobsdcomp
+novj
+novjccomp
+nologfd
+{% endhighlight %}
+
+其中 name 后面的 pptpd 是服务名称，可以任意修改成你喜欢的名字，在后面的配置中将对应的 pptpd 替换为你在这里修改的名字即可。
+
+接下来的几行以 refuse 或者 require 开头的指令，是配置拒绝和接受的加密方式，这里接受的 mschap-v2 和 mppe-128 都是较新的比较安全的加密方式，其中 mppe-128 需要第一步中验证的内核模块支持。
+
+另外两个比较重要的行就是 ms-dns 了，它们指定 VPN 使用的 DNS 服务器。毕竟 VPS 位于国外，所以推荐使用上面通用的 Google Public DNS，当然也可以修改为你的 VPS 所在 ISP 提供的 DNS。
+
+剩下后面几个选项，就不在这里叙述了，需要知道其含义的童鞋可以参考这个 [范例文件][options-pd] 中的注释。
+
+接下来修改另一个，存储着用户账户的文件：
+
+{% highlight bash %}
+vi /etc/ppp/chap-secrets
+{% endhighlight %}
+
+这个文件非常简单，其中用明文存储 VPN 客户的用户名、服务名称、密码和 IP 地址范围，每行一个账户：
+
+{% highlight text %}
+username1 pptpd passwd1 *
+username2 pptpd passwd2 *
+{% endhighlight %}
+
+其中第一第三列分别是用户名和密码；
+第二列应该和上面的文件 `/etc/ppp/options.pptpd` 中 name 后指定的服务名称一致；
+最后一列限制客户端 IP 地址，星号表示没有限制。
+
+##### --pptpd--
+
+下面编辑pptpd的配置文件：
+
+{% highlight bash %}
+vi /etc/pptpd.conf
+{% endhighlight %}
+
+这个文件中有效的行也很少：
+
+{% highlight text linenos %}
+option /etc/ppp/options.pptpd
+logwtmp
+localip 192.168.0.1
+remoteip 192.168.0.207-217
+{% endhighlight %}
+
+其中 option 选项指定使用 `/etc/ppp/options.pptpd` 中的配置；
+logwtmp 表示使用 WTMP 日志。
+
+后面两行是比较重要的两行。VPN 可以这样理解，Linux 客户端使用一个虚拟网络设备 ppp0 （Windows 客户端也可以理解成 VPN 虚拟网卡），连接到服务器的虚拟网络设备 ppp0 上，这样客户端就加入了服务器端 ppp0 所在的网络。
+localip 就是可以分配给服务器端 ppp0 的 IP 地址，remoteip 则是将要分配给客户端 ppp0 （或者虚拟网卡）的。
+
+这两项都可以是多个 IP，一般 localip 设置一个 IP 就行了，remoteip 则视客户端数目，分配一段 IP。其中 remoteip 的 IP 段需要和 localip 的 IP 段一致。
+
+localip 和 remoteip 所处的 IP 段可以随意些指定，但其范围内不要包含实际网卡 eth0 的 IP 地址。
+一般情况下，使用上面配置文件中的配置就好使了，你需要做的只是把 `192.168.0.207-217` 这个 IP 区间修改成你喜欢的 `192.168.0.a-b`，其中 `1<a<b<255`。
+
+#### 4、打开内核的 IP 转发功能：
+
+要使 VPN 服务器可以作为网络请求的中转代理，能够使客户端通过 VPN 访问 Internet，还需要开启内核的 IP 转发功能。可以编辑配置文件：
+
+{% highlight bash %}
+vi /etc/sysctl.conf
+{% endhighlight %}
+
+找到其中的行：
+
+{% highlight text %}
+net.ipv4.ip_forward = 0
+{% endhighlight %}
+
+修改为：
+
+{% highlight text %}
+net.ipv4.ip_forward = 1
+{% endhighlight %}
+
+然后执行下面命令使上述修改生效：
+
+{% highlight bash %}
+sysctl -p
+{% endhighlight %}
+
+#### 5、启动 pptpd 守护进程：
+
+上面配置完成后，就可以启动 pptpd 进程并设置自动启动了，和上面 iptables 的例子类似：
+
+{% highlight bash %}
+/etc/init.d/pptpd start
+chkconfig --level 35 pptpd on
+{% endhighlight %}
+
+#### 6、配置 iptables 防火墙放行和转发规则：
+
+最后，还需要配置防火墙。这里配置防火墙有三个目的：
+一是设置默认丢弃规则，保护服务器的安全；
+二是放行我们允许的数据包，提供服务；
+三是通过配置 nat 表的 POSTROUTING 链，增加 NAT 使得 VPN 客户端可以通过服务器访问互联网。
+总之我们的原则就是，只放行我们需要的服务，其他统统拒绝。
+
+首先介绍跟 PPTP VPN 相关的几项：
+
+* 允许 GRE (Generic Route Encapsulation) 协议，PPTP 使用 GRE 协议封装 PPP 数据包，然后封装成 IP 报文
+* 放行 1723 端口的 PPTP 服务
+* 放行状态为 RELATED, ESTABLISHED 的入站数据包（正常提供服务的机器上防火墙应该都已经配置了这一项）
+* 放行 VPN 虚拟网络设备所在的 `192.168.0.0/24` 网段与服务器网卡 eth0 之间的数据包转发
+* 为从 VPN 网段 192.168.0.0/24 转往网卡 eth0 的出站数据包做 NAT
+
+如果你其他的防火墙规则已经配置好无需改动，只需要增加上述相关 VPN 相关的规则，
+那么执行下面几条命令即可（第三条一般不用执行，除非你原来的防火墙连这个规则都没允许，但是多执行一遍也无妨）：
+
+{% highlight bash linenos %}
+iptables -A INPUT -p gre -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 1723 -j ACCEPT
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -s 192.168.0.0/24 -o eth0 -j ACCEPT
+iptables -A FORWARD -d 192.168.0.0/24 -i eth0 -j ACCEPT
+iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o eth0 -j MASQUERADE
+{% endhighlight %}
+
+上述的 IP 段 `192.168.0.1/24` 可能需要修改成 `/etc/pptp.conf` 中你配置的 localip 和 remoteip 所在地 IP 段。
+
+在我们这台服务器上，还需要一些其他的服务：
+
+* 22 端口的 SSH （非常重要！如果不小心连这个都忘了，基本就只能给 VPS 服务商发 Ticket 了）
+* 21 端口的 FTP 控制
+* 80 端口的 Web 服务
+* 允许响应各种 icmp 请求
+
+根据上述需求，加上服务器的基本要求，我写了下面的 shell 脚本。这个脚本默认 DROP 掉没有明确允许的规则，然后允许包括上面 VPN 相关的规则和上述几项其他服务所需的规则。
+可以根据你的实际需求，修改这个脚本，然后执行这个脚本快速部署 iptables 规则。
+
+{% highlight bash linenos %}
+#!/bin/bash
+### Clear Old Rules
+iptables -F
+iptables -X
+iptables -Z
+iptables -t nat -F
+iptables -t nat -X
+iptables -t nat -Z
+
+### * filter
+# Default DROP
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT DROP
+# INPUT Chain
+iptables -A INPUT -p gre -j ACCEPT
+iptables -A INPUT -i lo -p all -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 21 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --dport 1723 -j ACCEPT
+iptables -A INPUT -p icmp -m icmp --icmp-type any -j ACCEPT
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+# OUTPUT Chain
+iptables -A OUTPUT -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
+# FORWARD Chain
+iptables -A FORWARD -s 192.168.0.0/24 -o eth0 -j ACCEPT
+iptables -A FORWARD -d 192.168.0.0/24 -i eth0 -j ACCEPT
+### * nat
+# POSTROUTING Chain
+iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o eth0 -j MASQUERADE
+{% endhighlight %}
+
+需要注意的是，这个脚本开头首先清除掉了所有 iptables 规则，然后才部署新的规则，如果你需要保留你机器上现有的规则，请千万不要执行前面的清除语句，或者做好旧规则的备份再做实验：
+
+{% highlight bash %}
+iptables-save > iptables.backup
+{% endhighlight %}
+
+如果想恢复使用上面命令做好的备份，可以：
+
+{% highlight bash %}
+iptables-resotre iptables.backup
+{% endhighlight %}
+
+最后，如果确定所有的 iptables 规则已经合乎你的心意，就可以执行下面命令，将 iptables 规则保存下来。
+
+{% highlight bash %}
+/etc/init.d/iptables save
+{% endhighlight %}
+
+## 安全建议
+
+在 Twitter 上得到了 [@alexwwang][alexwwang] 和 [@helijohnny][helijohnny] 的指点，知道 VPN 与这个网站放在一起，可能不安全。他们建议我为 VPS 增加一个 IP，可以让 VPN 服务和 Web 走不同的 IP，这样就不会因为 Web 网站发表的内容轻易暴露 VPN 服务器的 IP 了。
+之前我只是在测试机上测试过，今天终于新购得一个 IP 地址，得以把这一部分补全。
+
+### 单网卡配置多个IP地址
+
+CentOS 下单网卡配置多个 IP 很容易。例如，假设现在网卡 eth0 已经有一个 IP 地址是 `123.123.123.123/24`，想要增加一个 IP 是 `123.123.123.124/24`，可以在 `/etc/sysconfig/network-scripts/` 目录下增加一个新的虚拟网卡配置文件 ifcfg-eth0:0。
+想省事的话可以直接把 ifcfg-eth0 复制成 ifcfg-eth0:0。
+然后编辑其内容，例如：
+
+{% highlight text linenos %}
+DEVICE=eth0:0
+BOOTPROTO=static
+ONBOOT=yes
+IPADDR=123.123.123.124
+NETMASK=255.255.255.0
+{% endhighlight %}
+
+虚拟网卡 eth0:0 配置的信息看起来有些少，其实它会共享实际设备 eth0 的配置信息，因此如上简单的配置就够了。
+另外如果在这张网卡上还需要添加更多的 IP 地址，照此例增加 eth0:1、eth0:2 等等虚拟设备既可。
+
+### 多 IP 的 iptables 配置
+
+然后关于 iptables 配置，思路就是在 INPUT 链上使用 `-d` 区别目的 IP，只在 Web 等服务使用的 IP 上放行 22 和 80 等几个端口，VPN 服务的 IP 上只放行 1723 端口。
+
+如果喜欢的话也可以为新增加的 IP 绑定一个不同的域名，只要防火墙配置好了，然后 VPN 使用的 IP 域名都不公开，理论上是挺难找到 VPN 服务地址的，这也是自建 VPN 的一个好处。
+这里再提供一个 iptables 规则的配置脚本，与上面的脚本类似，只是做了少量的修改，适用于多 IP 的情况：
+
+{% highlight bash linenos %}
+#!/bin/bash
+### Clear Old Rules
+iptables -F
+iptables -X
+iptables -Z
+iptables -t nat -F
+iptables -t nat -X
+iptables -t nat -Z
+
+### * filter
+# Default DROP and ACCEPT
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT DROP
+# INPUT Chain
+iptables -A INPUT -p gre -j ACCEPT
+iptables -A INPUT -i lo -p all -j ACCEPT
+iptables -A INPUT -p tcp -m tcp -d 123.123.123.123 --dport 21 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp -d 123.123.123.123 --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp -d 123.123.123.123 --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp -d 123.123.123.123 --dport 443 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp -d 123.123.123.124 --dport 1723 -j ACCEPT
+iptables -A INPUT -p icmp -m icmp --icmp-type any -j ACCEPT
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+# OUTPUT Chain
+iptables -A OUTPUT -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
+# FORWARD Chain
+iptables -A FORWARD -s 192.168.0.0/24 -o eth0 -j ACCEPT
+iptables -A FORWARD -d 192.168.0.0/24 -i eth0 -j ACCEPT
+
+### * nat
+# POSTROUTING Chain
+iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o eth0 -j MASQUERADE
+{% endhighlight %}
+
+这样配置完成后，对公开的 Web 域名进行端口扫描，就只能扫描到 80 等端口，而 VPN 服务使用的域名 IP 不公开，就保证了安全性。
+我手欠扫描了一下我们的服务器，结果就成了这样：
+
+{% highlight text linenos %}
+[root@sheldon ~]# nmap -sS gnailuy.com
+Starting Nmap 5.21 ( http://nmap.org ) at 2011-07-20 20:46 CST
+Nmap scan report for gnailuy.com (One of our IP address)
+Host is up (0.31s latency).
+Not shown: 996 filtered ports
+PORT    STATE SERVICE
+21/tcp  open  ftp
+22/tcp  open  ssh
+80/tcp  open  http
+443/tcp open  https
+Nmap done: 1 IP address (1 host up) scanned in 17.44 seconds
+
+[root@sheldon ~]# nmap -sS vpnservers.domain.name
+Starting Nmap 5.21 ( http://nmap.org ) at 2011-07-20 20:53 CST
+Nmap scan report for vpnservers.domain.name (Our another IP address)
+Host is up (0.32s latency).
+Not shown: 999 filtered ports
+PORT     STATE SERVICE
+1723/tcp open  pptp
+Nmap done: 1 IP address (1 host up) scanned in 24.52 seconds
+{% endhighlight %}
+
+## 后记
+
+这篇文章是边爬搜索引擎边学习边实验写成的，在摸索的过程中学习，确实学到了不少东西。
+学习和配置服务器的过程中，我不断的 Google 到相关的文章，中文的英文的已经有一大把，
+于是我就在想，我写这篇文章，应该完成哪些现有的资料尚不完善的地方。
+技术上我只是个初学者，除了搜索、思考、组织之外，暂时没有可能创造出新的技术来，
+于是只好从语言组织、信息翔实程度和对配置细节的解释上尽量提高本文的含金量，
+希望成为中文文章中比较有用的一篇，能够为其他有这方面想法的朋友提供一些小小指引。
+
+非常感谢在 Twitter 上为我出主意的 [@alexwwang][alexwwang] 和 [@helijohnny][helijohnny]，他们的宝贵意见促成了本文目前的样子。
+如果本文中还有哪些不足甚至纰漏，请千万不吝赐教；或者如果你想要和我探讨这方面的技术，都欢迎与我联系。
+可以 [@gnailuy][gnailuy] on Twitter，或者也可以在我的 [About Me][about] 页面找到更多其他联系方式。
+
+[freeradius]:   http://wiki.freeradius.org/PopTop
+[putty]:        http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
+[pptpd]:        http://poptop.sourceforge.net/yum/stable/packages
+[options-pd]:   http://poptop.sourceforge.net/dox/options.pptpd.txt
+[alexwwang]:    http://twitter.com/alexwwang
+[helijohnny]:   http://twitter.com/helijohnny
+[gnailuy]:      http://twitter.com/gnailuy
+[about]:        {{ site.url }}/about
