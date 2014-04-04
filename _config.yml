@@ -1,4 +1,13 @@
+# Site Information
 name: gnailuy.com
 markdown: redcarpet
 pygments: true
 permalink: pretty
+url: http://gnailuy.com
+
+# Author Information
+author: Yuliang Jin
+authorMsg: Data Platform Engineer@Umeng
+authorEmail: jinyuliang@umeng.com
+authorNickname: gnailuy
+
