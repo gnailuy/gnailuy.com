@@ -6,9 +6,9 @@ categories: [ linux ]
 ---
 
 本文介绍在安装 CentOS 操作系统的 Xen VPS 上，如何搭建 PPTP VPN 服务。
-包括 PPTP 的安装、配置，以及相应的 iptables 规则。
+包括 PPTP 的安装、配置，以及相应的 `iptables` 规则。
 本文暂时不涉及 PPTP 流量控制的部分，等抽空学明白了 [FreeRADIUS][freeradius] 再来写续篇。
-**2011 年 7 月 20 日更新**：在**安全建议**这一部分，增加了使用不同的 IP 地址，分别提供 VPN 服务和 Web 等其他常规服务，以及使用不同 IP 地址时如何书写 iptables 规则的内容。
+**2011 年 7 月 20 日更新**：在**安全建议**这一部分，增加了使用不同的 IP 地址，分别提供 VPN 服务和 Web 等其他常规服务，以及使用不同 IP 地址时如何书写 `iptables` 规则的内容。
 
 <!-- more -->
 
@@ -48,15 +48,15 @@ PPTP 的配置主要有下面五个步骤：
 * 安装所需的软件包
 * 配置 PPP 和 PPTP 的配置文件
 * 打开内核的 IP 转发功能
-* 启动 pptpd 守护进程
-* 配置 iptables 防火墙放行和转发规则
+* 启动 `pptpd` 守护进程
+* 配置 `iptables` 防火墙放行和转发规则
 
 ### 详细步骤
 
-开机以后，首先是登录 VPS。我平时用 Linux，就直接 ssh 命令登录上去。
+开机以后，首先是登录 VPS。我平时用 Linux，就直接 `ssh` 命令登录上去。
 如果是在 Winodws 下，推荐使用 [PuTTY][putty]，有一点需要注意，就是连接之前最好把字符集设置成 UTF-8，因为 Linux 默认的 locale 都是 UTF-8 了，如果出现非 ASCII 字符，不设置字符集就会出现乱码，具体的设置方法 Google 知道。
 
-下面的所有配置操作都需要 root 权限，如无特别说明，所有命令都在 root 的家目录下执行。顺便，最好在 VPS 上禁用 root 直接登录，尽量建立一个普通用户然后 su 到 root，具体细节偏题了，也请自行 Google。
+下面的所有配置操作都需要 root 权限，如无特别说明，所有命令都在 root 的家目录下执行。顺便，最好在 VPS 上禁用 root 直接登录，尽量建立一个普通用户然后 `su` 到 root，具体细节偏题了，也请自行 Google。
 
 #### 1、验证内核是否加载了MPPE模块：
 
@@ -71,20 +71,20 @@ modprobe ppp-compress-18 && echo MPPE is ok
 
 ##### --ppp--
 
-PPTP 使用 PPP 协议对用户数据进行封装，然后将 PPP 数据帧封装在 IP 数据报里，经由 IP 网络传播。因此首先需要支持 PPP 协议，我们使用的完整版 CentOS 已经自带了 ppp 这个软件包，如果你安装的是 Minial CentOS 之类的精简系统，则可能需要下面命令安装 ppp：
+PPTP 使用 PPP 协议对用户数据进行封装，然后将 PPP 数据帧封装在 IP 数据报里，经由 IP 网络传播。因此首先需要支持 PPP 协议，我们使用的完整版 CentOS 已经自带了 `ppp` 这个软件包，如果你安装的是 Minial CentOS 之类的精简系统，则可能需要下面命令安装 `ppp`：
 
 {% highlight bash %}
 yum install ppp
 {% endhighlight %}
 
-作为一个懒人，如果没有特殊的自定义要求，我一般尽量用 yum 安装软件。只要软件源里有，yum 比较方便一些，还能自动解决依赖关系。
+作为一个懒人，如果没有特殊的自定义要求，我一般尽量用 `yum` 安装软件。只要软件源里有，`yum` 比较方便一些，还能自动解决依赖关系。
 
 ##### --pptpd--
 
-有了 PPP 协议支持，接下来安装 pptpd。
-首先到 [这里][pptpd] 找到最新版适合你的平台的 pptpd。
-CentOS 与 RHEL 通用，Fedora 系统则可以使用后缀含 fc 字样的包，然后还需要根据内核选择 32 位或者 64 位的包。
-找到正确的软件包以后，复制其 URL，然后用 wget 下载到 root 的家目录（**或者**用 `rpm -ivh URL` 直接安装也行）。譬如我的 32 位内核 CentOS 5，使用下面命令下载：
+有了 PPP 协议支持，接下来安装 `pptpd`。
+首先到 [这里][pptpd] 找到最新版适合你的平台的 `pptpd`。
+CentOS 与 RHEL 通用，Fedora 系统则可以使用后缀含 'fc' 字样的包，然后还需要根据内核选择 32 位或者 64 位的包。
+找到正确的软件包以后，复制其 URL，然后用 `wget` 下载到 root 的家目录（**或者**用 `rpm -ivh URL` 直接安装也行）。譬如我的 32 位内核 CentOS 5，使用下面命令下载：
 
 {% highlight bash %}
 wget http://poptop.sourceforge.net/yum/stable/packages/pptpd-1.3.4-2.rhel5.i386.rpm
@@ -102,15 +102,15 @@ rpm -ivh pptpd-1.3.4-2.rhel5.i386.rpm
 
 ##### --iptables--
 
-同样，如果不是 Minial 的系统，应该不会没有安装 iptables。
+同样，如果不是 Minial 的系统，应该不会没有安装 `iptables`。
 这是 Linux 下最流行的防火墙，默认应该就能找到，如果没有，则：
 
 {% highlight bash %}
 yum install iptables
 {% endhighlight %}
 
-然后像是 iptables 这样的软件，对服务器非常重要。
-虽然还没有配置防火墙的规则，装完就打开吧（只要默认放行 ssh 的 22 端口就没问题），打开以后还需要设置一下，在主要的运行级别自动启动：
+然后像是 `iptables` 这样的软件，对服务器非常重要。
+虽然还没有配置防火墙的规则，装完就打开吧（只要默认放行 `ssh` 的 22 端口就没问题），打开以后还需要设置一下，在主要的运行级别自动启动：
 
 {% highlight bash %}
 /etc/init.d/iptables start
@@ -119,22 +119,22 @@ chkconfig --level 35 iptables on
 
 #### 3、配置PPP和PPTP的配置文件：
 
-接下来需要对 ppp 和 pptpd 进行配置，编辑它们的几个配置文件。
-如果有 Linux 基础的话，当然推荐使用 vi/vim 来编辑配置文件。如果不熟悉也不想熟悉 vi，那么可以用更容易上手的 nano 替换下面我将要使用的 vi 命令。
+接下来需要对 `ppp` 和 `pptpd` 进行配置，编辑它们的几个配置文件。
+如果有 Linux 基础的话，当然推荐使用 'vi/vim' 来编辑配置文件。如果不熟悉也不想熟悉 `vi`，那么可以用更容易上手的 `nano` 替换下面我将要使用的 `vi` 命令。
 本文不涉及文本编辑器的基础知识，只需要知道如何打开文件、编辑文件、保存文件和退出文本编辑器就可以了。
 
-这些配置文件中，# 号开头的行均为注释，对配置不起作用。我们不必关心注释，所以下面我将使用类似
+这些配置文件中，'#' 号开头的行均为注释，对配置不起作用。我们不必关心注释，所以下面我将使用类似
 
 {% highlight bash %}
 grep ^[^#] /etc/ppp/options.pptpd
 {% endhighlight %}
 
-这样的命令，过滤出配置文件中有效的行显示在本文正文中。你在编辑的时候，只需要添加或修改这些有效的行，把不需要的行前面加上 # 号注释掉即可。
+这样的命令，过滤出配置文件中有效的行显示在本文正文中。你在编辑的时候，只需要添加或修改这些有效的行，把不需要的行前面加上 `#` 号注释掉即可。
 
 ##### --ppp--
 
-配置 ppp 需要编辑它的两个配置文件，一个是 option（选项）文件，一个是用户账户文件。
-首先编辑option文件：
+配置 `ppp` 需要编辑它的两个配置文件，一个是 option（选项）文件，一个是用户账户文件。
+首先编辑 option 文件：
 
 {% highlight bash %}
 vi /etc/ppp/options.pptpd
@@ -204,8 +204,8 @@ remoteip 192.168.0.207-217
 其中 option 选项指定使用 `/etc/ppp/options.pptpd` 中的配置；
 logwtmp 表示使用 WTMP 日志。
 
-后面两行是比较重要的两行。VPN 可以这样理解，Linux 客户端使用一个虚拟网络设备 ppp0 （Windows 客户端也可以理解成 VPN 虚拟网卡），连接到服务器的虚拟网络设备 ppp0 上，这样客户端就加入了服务器端 ppp0 所在的网络。
-localip 就是可以分配给服务器端 ppp0 的 IP 地址，remoteip 则是将要分配给客户端 ppp0 （或者虚拟网卡）的。
+后面两行是比较重要的两行。VPN 可以这样理解，Linux 客户端使用一个虚拟网络设备 `ppp0` （Windows 客户端也可以理解成 VPN 虚拟网卡），连接到服务器的虚拟网络设备 `ppp0` 上，这样客户端就加入了服务器端 `ppp0` 所在的网络。
+localip 就是可以分配给服务器端 `ppp0` 的 IP 地址，remoteip 则是将要分配给客户端 `ppp0` （或者虚拟网卡）的。
 
 这两项都可以是多个 IP，一般 localip 设置一个 IP 就行了，remoteip 则视客户端数目，分配一段 IP。其中 remoteip 的 IP 段需要和 localip 的 IP 段一致。
 
@@ -240,7 +240,7 @@ sysctl -p
 
 #### 5、启动 pptpd 守护进程：
 
-上面配置完成后，就可以启动 pptpd 进程并设置自动启动了，和上面 iptables 的例子类似：
+上面配置完成后，就可以启动 `pptpd` 进程并设置自动启动了，和上面 `iptables` 的例子类似：
 
 {% highlight bash %}
 /etc/init.d/pptpd start
@@ -321,7 +321,7 @@ iptables -A FORWARD -d 192.168.0.0/24 -i eth0 -j ACCEPT
 iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o eth0 -j MASQUERADE
 {% endhighlight %}
 
-需要注意的是，这个脚本开头首先清除掉了所有 iptables 规则，然后才部署新的规则，如果你需要保留你机器上现有的规则，请千万不要执行前面的清除语句，或者做好旧规则的备份再做实验：
+需要注意的是，这个脚本开头首先清除掉了所有 `iptables` 规则，然后才部署新的规则，如果你需要保留你机器上现有的规则，请千万不要执行前面的清除语句，或者做好旧规则的备份再做实验：
 
 {% highlight bash %}
 iptables-save > iptables.backup
@@ -333,7 +333,7 @@ iptables-save > iptables.backup
 iptables-resotre iptables.backup
 {% endhighlight %}
 
-最后，如果确定所有的 iptables 规则已经合乎你的心意，就可以执行下面命令，将 iptables 规则保存下来。
+最后，如果确定所有的 `iptables` 规则已经合乎你的心意，就可以执行下面命令，将 `iptables` 规则保存下来。
 
 {% highlight bash %}
 /etc/init.d/iptables save
@@ -346,8 +346,8 @@ iptables-resotre iptables.backup
 
 ### 单网卡配置多个IP地址
 
-CentOS 下单网卡配置多个 IP 很容易。例如，假设现在网卡 eth0 已经有一个 IP 地址是 `123.123.123.123/24`，想要增加一个 IP 是 `123.123.123.124/24`，可以在 `/etc/sysconfig/network-scripts/` 目录下增加一个新的虚拟网卡配置文件 ifcfg-eth0:0。
-想省事的话可以直接把 ifcfg-eth0 复制成 ifcfg-eth0:0。
+CentOS 下单网卡配置多个 IP 很容易。例如，假设现在网卡 eth0 已经有一个 IP 地址是 `123.123.123.123/24`，想要增加一个 IP 是 `123.123.123.124/24`，可以在 `/etc/sysconfig/network-scripts/` 目录下增加一个新的虚拟网卡配置文件 `ifcfg-eth0:0`。
+想省事的话可以直接把 `ifcfg-eth0` 复制成 `ifcfg-eth0:0`，
 然后编辑其内容，例如：
 
 {% highlight text linenos %}
@@ -363,10 +363,10 @@ NETMASK=255.255.255.0
 
 ### 多 IP 的 iptables 配置
 
-然后关于 iptables 配置，思路就是在 INPUT 链上使用 `-d` 区别目的 IP，只在 Web 等服务使用的 IP 上放行 22 和 80 等几个端口，VPN 服务的 IP 上只放行 1723 端口。
+然后关于 `iptables` 配置，思路就是在 INPUT 链上使用 `-d` 区别目的 IP，只在 Web 等服务使用的 IP 上放行 22 和 80 等几个端口，VPN 服务的 IP 上只放行 1723 端口。
 
 如果喜欢的话也可以为新增加的 IP 绑定一个不同的域名，只要防火墙配置好了，然后 VPN 使用的 IP 域名都不公开，理论上是挺难找到 VPN 服务地址的，这也是自建 VPN 的一个好处。
-这里再提供一个 iptables 规则的配置脚本，与上面的脚本类似，只是做了少量的修改，适用于多 IP 的情况：
+这里再提供一个 `iptables` 规则的配置脚本，与上面的脚本类似，只是做了少量的修改，适用于多 IP 的情况：
 
 {% highlight bash linenos %}
 #!/bin/bash
