@@ -26,14 +26,8 @@ navItems:
 # Image Tag
 image:
     source: assets/images/_fullsize
-    output: generated
+    output: images
     presets:
         # Proportional preset
-        users:
-            attr:
-                class: user-portrait
-                itemprop: image
-            width: 350
-        # Scaled and cropped preset
         fullWidth:
             width: 630
