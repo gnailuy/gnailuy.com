@@ -81,36 +81,36 @@ Apache 中实现 SSL 安全 Web，需要使用模块 `mod_ssl`，这个模块提
 
 首先，先卸载旧的 apache 和 openssl 头文件：
 
-{% highlight bash %}
+``` bash
 yum remove {httpd,openssl}-devel
-{% endhighlight %}
+```
 
 然后到[这里][openssl]下载最新版的 openssl（标记 LATEST 的）并解压，按照经典的三部曲编译安装之：
 
-{% highlight bash %}
+``` bash
 wget http://www.openssl.org/source/openssl-1.0.0d.tar.gz
 tar xzvf openssl-1.0.0d.tar.gz
 cd openssl-1.0.0d
 ./configure
 make
 make install
-{% endhighlight %}
+```
 
 上面的安装将 openssl 安装到了 `/usr/local/ssl` 中，其中 `/usr/local/ssl/bin/openssl`
 是 openssl 的可执行文件，可以将它拷贝到 /usr/bin/openssl 来替换旧版的 openssl，当然替换之前我按惯例做了备份。
 
 接下来到[这里][apache]在离你最近的镜像里下载最新的 Apache，按照你的需要编译安装到 `/usr/local/apache2` 中：
 
-{% highlight bash %}
+``` bash
 wget http://labs.renren.com/apache-mirror//httpd/httpd-2.2.19.tar.gz
 tar xzvf httpd-2.2.19.tar.gz
 cd httpd-2.2.19
-{% endhighlight %}
+```
 
 我按照 [Milo&scaron; Žikić][milos] 提供的参数完成了编译并成功运行了 Apache，但是在没有完全理解所有参数含义之前，我觉得还是不在这台 VPS 上启用新的 Apache 比较好一点。
 编译中就使用了 `/usr/local/ssl` 中新安装的 openssl 的代码，这些 openssl 的代码用于编译 `mod_ssl` 模块：
 
-{% highlight bash %}
+``` bash
 ./configure --enable-so --enable-ssl --with-ssl=/usr/local/ssl \
     --enable-auth-anon \
     --enable-auth-dbm \
@@ -142,7 +142,7 @@ cd httpd-2.2.19
     --enable-vhost-alias
 make
 make install
-{% endhighlight %}
+```
 
 安装完成后，新的 Apache 被安装到了 `/usr/local/apache2` 这个目录中。
 
@@ -159,14 +159,14 @@ make install
 
 接下来是对各个虚拟主机的配置，包括 HTTP 和 HTTPS 的虚拟站点。我的建议是把虚拟主机的配置和 SSL 的配置都放在单独的配置文件里，然后在主配置文件中使用 Include 指令包含进来：
 
-{% highlight apache %}
+``` apache
 ......
 NameVirtualHost *:80
 NameVirtualHost *:443
 Include conf.d/ssl.conf
 Include conf.d/vhost.d/vhost.conf
 Include conf.d/vhost.d/ssl.vhost.conf
-{% endhighlight %}
+```
 
 其中 `conf.d` 和 `conf.d/vhost.d` 目录是在 `/usr/local/apache2` 目录下手动建立的，专门放置配置好的虚拟主机和 SSL 配置文件。
 
@@ -175,7 +175,7 @@ Include conf.d/vhost.d/ssl.vhost.conf
 
 `vhost.conf` 文件中就是常规 HTTP 上的 Virtual Host 配置，例如其中一个虚拟主机的配置块：
 
-{% highlight apache %}
+``` apache
 <VirtualHost *:80>
 ServerAdmin username@server.com
 DocumentRoot /path/to/web/DocumentRoot
@@ -191,14 +191,14 @@ Allow from all
 </Directory>
 </VirtualHost>
 ......
-{% endhighlight %}
+```
 
 其他虚拟主机的 HTTP 配置也是类似的配置块。
 
 `ssl.vhost.conf` 的配置指定在 HTTPS 的 443 端口为哪些主机使用哪些证书和哪些私钥，这些证书和私钥如何获得的问题会在下一节介绍。
 这个配置文件中比较重要的几个指令如下：
 
-{% highlight apache %}
+``` apache
 <VirtualHost *:443>
 DocumentRoot "/path/to/web/DocumentRoot"
 ServerName gnailuy.com:443
@@ -209,7 +209,7 @@ SSLCertificateKeyFile /path/to/gnailuy.com.key.unprotected
 SSLCertificateChainFile /path/to/sub.class1.server.ca.pem
 ......
 </VirtualHost>
-{% endhighlight %}
+```
 
 DocumentRoot 和 ServerName 与 HTTP 的 Virtual Host 配置类似，本文的重点在于后面四条指令。
 SSLEngine 指示打开 SSL 引擎，后面三个指令分别指示 SSL 的证书文件（gnailuy.com.crt）、解密了的私钥 Key 文件（gnailuy.com.key.unprotected）
@@ -258,9 +258,9 @@ SSLEngine 指示打开 SSL 引擎，后面三个指令分别指示 SSL 的证书
 
 上述申请和配置完成后，就可以使用 HTTPS 访问这个站点了，当然之前别忘了在防火墙上放行 HTTPS 使用的 443 端口：
 
-{% highlight bash %}
+``` bash
 iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
-{% endhighlight %}
+```
 
 ### Wordpress 中启用 HTTPS
 
@@ -271,24 +271,24 @@ iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 Wordpress 中 Login 页面与后台 Admin 页面的安全要求不言而喻，Wordpress 本身对这些页面也有比较方便的机制启用 HTTPS。
 Wordpress 官方的[这篇文档][wp-ssl]中介绍了如何通过定义 FORCE\_SSL\_LOGIN 和 FORCE\_SSL\_ADMIN 这两个变量强制启用 HTTPS，只需要编辑 `wp_config.php` 文件，在
 
-{% highlight php %}
+``` php
 ...
 /* That's all, stop editing! Happy blogging. */
 ...
 require_once(ABSPATH . 'wp-settings.php');
-{% endhighlight %}
+```
 
 这段代码之前，添加一句
 
-{% highlight php %}
+``` php
 define('FORCE_SSL_LOGIN', true);
-{% endhighlight %}
+```
 
 就可以强制在登录页面使用 HTTPS，或者添加一句
 
-{% highlight php %}
+``` php
 define('FORCE_SSL_ADMIN', true);
-{% endhighlight %}
+```
 
 就可以强制在登录页面和后台管理页面使用 HTTPS。这里我添加的是后者，Login 和全部 Admin 页面都使用 HTTPS。
 
