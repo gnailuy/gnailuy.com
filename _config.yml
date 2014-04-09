@@ -22,3 +22,18 @@ navItems:
       url: /posts
     - name: about
       url: /about
+
+# Image Tag
+image:
+    source: assets/images/_fullsize
+    output: generated
+    presets:
+        # Proportional preset
+        users:
+            attr:
+                class: user-portrait
+                itemprop: image
+            width: 350
+        # Scaled and cropped preset
+        fullWidth:
+            width: 630
