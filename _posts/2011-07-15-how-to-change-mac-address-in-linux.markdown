@@ -12,7 +12,7 @@ or change it permanently by editing the network configuration file. In this post
 
 ### Temporary change of MAC address
 
-Switch to root or use sudo, then:
+Switch to root or use `sudo`, then:
 
 ``` bash
 ifconfig eth0 down
@@ -46,7 +46,7 @@ To make the change take effect immediately, you should restart the network inter
 ```
 
 In debian/ubuntu, the network interface is configured in file `/etc/network/interface`.
-And the syntax are totally different with those in Redhat-like system. But it is also very easy to change the MAC address:
+And the syntax is totally different with those in Redhat-like system. But it is also very easy to change the MAC address:
 
 ``` bash
 vi /etc/network/interface
