@@ -3,6 +3,8 @@ name: gnailuy.com
 markdown: redcarpet
 pygments: true
 permalink: pretty
+encoding: utf-8
+baseurl: /
 
 # Author Information
 author: Yuliang Jin
