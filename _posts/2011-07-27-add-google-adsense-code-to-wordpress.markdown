@@ -71,4 +71,4 @@ Then put your Customer Search code there. Here I didn't use the modified `search
 
 [adsense-deluxe]:       http://www.acmetech.com/blog/2005/07/26/adsense-deluxe-wordpress-plugin/
 [post-layout]:          http://www.satollo.net/plugins/post-layout
-[chinese]:              {{ site.url }}/internet/2011/07/28/add-google-adsense-code-to-wordpress-chs/
+[chinese]:              /internet/2011/07/28/add-google-adsense-code-to-wordpress-chs/

@@ -69,4 +69,4 @@ Google 提供的自定义搜索，无论从质量或者速度上都是最佳的�
 
 [adsense-deluxe]:       http://www.acmetech.com/blog/2005/07/26/adsense-deluxe-wordpress-plugin/
 [post-layout]:          http://www.satollo.net/plugins/post-layout
-[english]:              {{ site.url }}/internet/2011/07/28/add-google-adsense-code-to-wordpress/
+[english]:              /internet/2011/07/28/add-google-adsense-code-to-wordpress/

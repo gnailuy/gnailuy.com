@@ -450,4 +450,4 @@ Nmap done: 1 IP address (1 host up) scanned in 24.52 seconds
 [alexwwang]:    http://twitter.com/alexwwang
 [helijohnny]:   http://twitter.com/helijohnny
 [gnailuy]:      http://twitter.com/gnailuy
-[about]:        {{ site.url }}{{ site.urlAbout }}
+[about]:        {{ site.urlAbout }}
