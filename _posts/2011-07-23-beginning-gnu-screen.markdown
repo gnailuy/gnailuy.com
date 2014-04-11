@@ -2,7 +2,7 @@
 layout: post
 title: "GNU Screen 使用入门"
 date: 2011-07-23 19:12:25
-categories: [ Linux ]
+categories: [ linux ]
 ---
 
 前些天开始学习使用 GNU Screen 程序，发现这个工具在管理服务器时候确实挺方便的，于是写一篇文章总结一下，顺便介绍 Screen 的基本使用方法。

@@ -2,7 +2,7 @@
 layout: post
 title: "又一个 VIM 配置文件"
 date: 2011-07-18 13:55:36
-categories: [ Linux ]
+categories: [ linux ]
 ---
 
 这篇文章记录我的 VIM 配置，包括带注释的配置文件 `.vimrc`，和几个很好玩的插件。

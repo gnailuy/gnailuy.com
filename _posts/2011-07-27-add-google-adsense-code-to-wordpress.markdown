@@ -2,7 +2,7 @@
 layout: post
 title: Add Google Adsense code to Wordpress
 date: 2011-07-27 18:21:09
-categories: [ Internet ]
+categories: [ internet ]
 ---
 
 Google approved my Adsense application today. I read a lot of articles to find the easiest way to add Adsense code to my blog this afternoon.

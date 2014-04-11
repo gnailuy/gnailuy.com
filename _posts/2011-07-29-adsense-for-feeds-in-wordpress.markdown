@@ -2,7 +2,7 @@
 layout: post
 title: Adsense for Feeds in Wordpress
 date: 2011-07-29 12:46:15
-categories: [ Internet ]
+categories: [ internet ]
 ---
 
 Google's acquisition of [Feedburner][feedburner] makes it easier to add advertisements to your RSS feeds.

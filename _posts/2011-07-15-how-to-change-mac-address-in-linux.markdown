@@ -2,7 +2,7 @@
 layout: post
 title: How to change MAC address in Linux
 date: 2011-07-15 17:19:37
-categories: [ Linux ]
+categories: [ linux ]
 ---
 
 It's very easy to change the IP address in Linux. We can use the command `ifconfig` to switch to a new IP address temporarily,

@@ -3,7 +3,7 @@ layout: post
 title: "GSL 科学计算库、随机变量的 Erlang 分布与 Weibull 分布"
 date: 2011-07-10 12:03:19
 latex: true
-categories: [ Mathematics, Programming ]
+categories: [ mathematics ]
 ---
 
 本文首先简要介绍了 GNU 科学计算库 GSL 和随机变量的 Erlang 分布与 Weibull 分布，然后说明了 GSL 库如何生成服从 Erlang 分布或 Weibull 分布的随机数，以及在编程中如何使用 GSL 库。

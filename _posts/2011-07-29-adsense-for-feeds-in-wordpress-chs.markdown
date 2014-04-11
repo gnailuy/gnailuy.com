@@ -2,7 +2,7 @@
 layout: post
 title: "为 WordPress 的 RSS 添加 Adsense 广告"
 date: 2011-07-29 12:46:34
-categories: [ Internet ]
+categories: [ internet ]
 ---
 
 Google 收购 [Feedburner][feedburner] 以后，向 RSS 中添加 Adsense 更加容易了。本文介绍如何向 Wordpress 的 RSS 输出中添加 Adsense 广告。

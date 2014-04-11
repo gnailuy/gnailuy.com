@@ -2,7 +2,7 @@
 layout: post
 title: "Wordpress 添加 Google Adsense 代码"
 date: 2011-07-27 18:22:23
-categories: [ Internet ]
+categories: [ internet ]
 ---
 
 今天 Google 批准了我的 Adsense 计划申请，所以下午我花了点时间看了些相关的文章，想找个比较好的方法把 Adsense 代码添加到这个小站上。

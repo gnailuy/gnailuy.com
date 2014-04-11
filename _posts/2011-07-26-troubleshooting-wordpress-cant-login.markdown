@@ -2,7 +2,7 @@
 layout: post
 title: "Troubleshooting: wordpress can't login"
 date: 2011-07-26 15:45:23
-categories: [ Internet ]
+categories: [ internet ]
 ---
 
 I keep cookies in my browsers all the time, so it had been long since the last time I perform a "Log In" action to my wordpress site.
