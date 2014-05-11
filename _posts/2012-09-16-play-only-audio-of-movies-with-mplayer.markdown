@@ -15,7 +15,7 @@ Moreover, I wanted to play only the audio but not the video, so I searched the '
 mplayer -loop 0 -novideo filename.mp4
 ```
 
-Bingo!
+And voilà!
 
 PS. I also found [this post][extract-audio] very useful if you want to extract the audio from an mp4 file to mp3 file.
 
