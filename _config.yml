@@ -20,8 +20,8 @@ urlAbout: /about
 navItems:
     - name: home
       url: /
-    - name: posts
-      url: /posts
+    - name: archive
+      url: /archive
     - name: about
       url: /about
 
