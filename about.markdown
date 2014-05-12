@@ -2,6 +2,7 @@
 layout: page
 title: "About Me"
 date: 2014-04-04 15:03:42
+comment: true
 categories: [me]
 ---
 

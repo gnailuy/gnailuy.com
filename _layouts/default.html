@@ -47,6 +47,11 @@
             src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
           </script>
         {% endif %}
+
+        <!-- auto redirect 404 page -->
+        {% if page.url == "/404.html" %}
+          <meta http-equiv="refresh" content="3; url=/">
+        {% endif %}
     </head>
 
     {% include google-analytics.html %}
