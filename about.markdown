@@ -5,9 +5,9 @@ comment: true
 permalink: /about/index.html
 ---
 
-Hi there! I'm a data platform software engineer at [Umeng][umeng], and was graduated from the College of Computer Science & Technology at [Harbin Engineering University][heu]. Welcome to my bolg! Below is some information about me.
+Hi there! I'm a data platform software engineer at [umeng.com][umeng], and was graduated from the College of Computer Science & Technology at [Harbin Engineering University][heu]. Welcome to my bolg! Below is some brief information about me.
 
-Basic Information:
+Basic Info:
 
 * Name / Gender - Yuliang Jin / Male
 * Location - Beijing, China
@@ -18,7 +18,8 @@ Few facts about me:
 
 * Currently working on Hadoop/HBase platform at Umeng
 * C / C++ and Java programmer, knows Python, Bash Script, Perl, Gnu Asm etc.
-* Linuxer, Open source software lover
+* Linuxer
+* Love Docker
 * Chinese native speaker, Speaking English, e cominciando a imparare l'italiano
 
 [umeng]:    http://www.umeng.com
