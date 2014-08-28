@@ -1,14 +1,11 @@
---- 
+---
 layout: page
-title: "About Me"
-date: 2014-04-04 15:03:42
+title: About Me
 comment: true
-categories: [me]
+permalink: /about/index.html
 ---
 
 Hi there! I'm a data platform software engineer at [Umeng][umeng], and was graduated from the College of Computer Science & Technology at [Harbin Engineering University][heu]. Welcome to my bolg! Below is some information about me.
-
-<!-- more -->
 
 Basic Information:
 
