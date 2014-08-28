@@ -1,7 +1,7 @@
 # Site Information
 name: gnailuy.com
 markdown: redcarpet
-pygments: true
+highlighter: pygments
 permalink: pretty
 encoding: utf-8
 baseurl: /
