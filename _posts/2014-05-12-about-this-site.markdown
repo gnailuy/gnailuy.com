@@ -22,7 +22,7 @@ categories: [ jekyll ]
 4. 评论换用了高端大气国际化的 [Disqus][disqus]，代码放在了 [`_includes`][includes] 里面，在 [`post.html`][post-html] 和 [`page.html`][page-html] 里加载；
 5. 原来有 Google Analytics，所以继续沿用，代码也在 [`_includes`][includes] 里面，在 [`default.html`][default-html] 里加载；
 6. 原来网站的 URL 现在完全没有沿用，因此如果从别处跳转过来，可能有很多 404 错误，所以我给 404 页面增加了自动跳转到首页，代码在[这里][404-redirect]；
-6. 新博所有代码都在 Github 上，链接在[这里][gnailuy-com-git]，所以其他没提到的事情，要么是默认，要么是 bla bla；
+7. 新博所有代码都在 Github 上，链接在[这里][gnailuy-com-git]，所以其他没提到的事情，要么是默认，要么是 bla bla；
 
 [wp-to-jekyll]:     http://import.jekyllrb.com/docs/wordpress/
 [gnailuy-com-git]:  https://github.com/gnailuy/gnailuy.com
