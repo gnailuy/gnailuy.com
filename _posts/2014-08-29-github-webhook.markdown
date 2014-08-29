@@ -6,7 +6,7 @@ categories: [ jekyll ]
 ---
 
 昨天买了个 DigitalOcean (这是我的 [Refcode][refcode])，用优惠码 `ALLSSD10` 换了 $10，然后迅速创建了一个 $5/mo 的节点，连夜把博客迁移过来了。
-换了 Jekyll 以后，我就一直把博客的源代码放在 [Github][gnailuy-com-git] 上，而站点本身还是放在了之前 WordPress 的 Web Root，用原来的 Apache 来做服务。
+前阵子换了 Jekyll 以后，我就一直把博客的源代码放在 [Github][gnailuy-com-git] 上，而站点本身还是放在了之前 WordPress 的 Web Root，用原来的 Apache 来做服务。
 由于之前我只在笔记本上搭建了 Jekyll 环境，所以有新文章和新修改时候，我需要在本地 `jekyll build`，打包上传 `_site` 目录，然后替换到线上更新站点，
 使 Github 沦落成了一个保存代码的地方。
 
