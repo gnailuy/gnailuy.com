@@ -53,7 +53,8 @@ Webhook 的[官方文档][webhook]里推荐了 [Sinatra][sinatrarb]，用来搭�
 收到 POST 请求后，程序首先进行安全验证，然后解开 JSON 数据，判断 `ref` 确实是 `refs/heads/master` 的话，
 就调用 [`update.sh`][update-script] 脚本执行具体的更新。
 
-在 [21 行][line-21] 中对比 payload 校验和的地方，`GITHUB_TOKEN` 的值是在登录脚本(~/.bashrc or ~/.zshrc 等)中使用 `export GITHUB_TOKEN=xxx` 指定的，
+在 [21 行][line-21] 中对比 payload 校验和的地方有个 `GITHUB_TOKEN`，这个值我是通过新建了一个文件 `/etc/environment.githook`，
+其中使用 `export GITHUB_TOKEN=xxx` 指定的，Sinatra 服务的[启动脚本][githook-script]这一行中 source 了这个文件。
 这个 Token 就是在 Github 项目的 Settings 页面中创建 Webhook 时可以填写的 Secret 值。
 
 最后，上述代码对应的 Payload URL 当然就是 `http://direct.gnailuy.com:20182/push` 了。
@@ -67,6 +68,7 @@ Webhook 的[官方文档][webhook]里推荐了 [Sinatra][sinatrarb]，用来搭�
 [sinatrarb]:        http://www.sinatrarb.com/
 [official-nginx]:   https://registry.hub.docker.com/_/nginx/
 [githook]:          https://github.com/gnailuy/githook
+[githook-script]:   https://github.com/gnailuy/githook/blob/master/githook-service#L13
 [post-request]:     https://github.com/gnailuy/githook/blob/master/server.rb#L7
 [update-script]:    https://github.com/gnailuy/githook/blob/master/update.sh
 [line-21]:          https://github.com/gnailuy/githook/blob/master/server.rb#L21
