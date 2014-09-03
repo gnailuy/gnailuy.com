@@ -42,8 +42,8 @@ sudo gem install jekyll mini_magick
 接下来，如果有文章更新，只需要从 Github 上 pull 下来我的站点代码，然后 `jekyll build`，并且用新生成的内容替换老的 Web Root 就可以了。
 我又希望这个过程希望自动化，于是就用到了 Github 提供的 Webhook 功能。
 
-Webhook 大致是这么一个运作原理，当仓库中有新事件发生时(比如这里我关心 push 这个事件，代表我对站点提交了修改)，Github 会发送一个 POST 请求，
-到用户指定的 API 地址，API 服务器收到通知后，根据 POST 内容做出响应(比如这里就是拉取代码，更新网站这些动作)。
+Webhook 大致是这么一个运作原理，当仓库中有新事件发生时(比如这里我关心 push 这个事件，代表我对站点提交了修改)，
+Github 会发送一个 POST 请求到用户指定的 API 地址。API 服务器收到通知后，根据 POST 内容做出响应(比如这里就是拉取代码，更新网站这些动作)。
 
 Webhook 的[官方文档][webhook]里推荐了 [Sinatra][sinatrarb]，用来搭建简单的 Webhook API 非常方便。
 我照着官方给出的例子写了一个非常简单的 Webhook，当 [gnailuy.com][gnailuy-com-git] 发生 push 到 master 分支的事件时，就更新网站，
