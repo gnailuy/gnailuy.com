@@ -3,6 +3,7 @@ name: gnailuy.com
 markdown: redcarpet
 highlighter: pygments
 permalink: pretty
+timezone: Asia/Shanghai
 encoding: utf-8
 baseurl: /
 
