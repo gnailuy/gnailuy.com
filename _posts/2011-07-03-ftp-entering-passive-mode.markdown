@@ -36,6 +36,6 @@ modprobe ip_conntrack_ftp
 vi /etc/sysconfig/iptables-config
 ```
 
-找到 IPTABLES_MODULES 这一行，后面加上 `ip_conntrack_ftp` 这个模块：
+找到 IPTABLES\_MODULES 这一行，后面加上 `ip_conntrack_ftp` 这个模块：
 
     IPTABLES_MODULES="ip_conntrack_ftp"

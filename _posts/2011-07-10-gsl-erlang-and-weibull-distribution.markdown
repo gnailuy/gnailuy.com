@@ -35,7 +35,7 @@ categories: [ mathematics ]
 GSL 提供了大量关于数学计算的函数库，当然也包括本文用到的随机数生成函数。更多关于 GSL 的信息可以到 [GSL 的主页][gsl]去了解。
 
 计算机中产生服从各种分布的随机数，其基础是产生服从均匀分布的随机数。得到服从均匀分布的随机数以后，可以通过许多不同的算法产生服从其他分布的随机数，
-例如较常见的使用 Polar (Box-Mueller) 方法 (`gsl-1.9/randlist/gauss.c` 中函数 gsl_rand_gaussian) 或者使用 Ziggurat 方法 (`gsl-1.9/randlist/gausszig.c` 中函数 gsl_rand_gaussian_ziggurat) 产生 Gaussian 分布的随机数等 (参考 William H.Press 等人的著作《C 数值算法》)。
+例如较常见的使用 Polar (Box-Mueller) 方法 (`gsl-1.9/randlist/gauss.c` 中函数 gsl\_rand\_gaussian) 或者使用 Ziggurat 方法 (`gsl-1.9/randlist/gausszig.c` 中函数 gsl\_rand\_gaussian\_ziggurat) 产生 Gaussian 分布的随机数等 (参考 William H.Press 等人的著作《C 数值算法》)。
 
 服从均匀分布的随机数亦可由许多不同的随机数生成器来产生，不同的随机数生成器生成随机数的速度、随机性等均有差别。GSL 库提供了 12 种随机数生成器([来源][generator])。
 其中速度最快的是 taus、gfsr4 和 mt19937 (default) 这三个生成器，而随机性最好的则是 ranlux 系列算法，也就是 GSL 的 ranlxs 系列生成器([来源][performance])。
@@ -52,7 +52,7 @@ ranlxs 系列生成器中，ranlxs0、ranlxs1 和 ranlxs2 产生 24 位单精度
 r = gsl_rng_alloc(T);
 ```
 
-这里的 T 是 gsl_rng_type 类型的指针，它可以是 gsl_rng_default (即 gsl_rng_mt19937)、gsl_rng_ranlxs0 或者 gsl_rng_ranlxd1 等，用于指定使用不同的随机数生成器。
+这里的 T 是 gsl\_rng\_type 类型的指针，它可以是 gsl\_rng\_default (即 gsl\_rng\_mt19937)、gsl\_rng\_ranlxs0 或者 gsl\_rng\_ranlxd1 等，用于指定使用不同的随机数生成器。
 
 #### 二、生成种子
 
