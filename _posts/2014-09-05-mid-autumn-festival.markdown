@@ -1,6 +1,6 @@
 --- 
 layout: post
-title: "马上要又中秋节了"
+title: "马上又要中秋节了"
 date: 2014-09-05 16:58:15
 categories: [ me ]
 ---
