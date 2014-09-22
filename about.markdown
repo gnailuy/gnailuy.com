@@ -5,7 +5,7 @@ comment: true
 permalink: /about/index.html
 ---
 
-Hi there! I'm a data platform software engineer at [umeng.com][umeng], and was graduated from the College of Computer Science & Technology at [Harbin Engineering University][heu]. Welcome to my bolg! Below is some brief information about me.
+Hi there! I'm a data platform software engineer at [umeng.com][umeng], and was graduated from the College of Computer Science & Technology at [Harbin Engineering University][heu]. Welcome to my blog! Below is some brief information about me.
 
 Basic Info:
 
