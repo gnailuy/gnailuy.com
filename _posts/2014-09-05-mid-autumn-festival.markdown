@@ -17,4 +17,4 @@ categories: [ me ]
 
 而且说到滚出地球，请下面推上提到的这些人滚出地球吧，最好连银河系也滚出去好了，谢谢：
 
-{% image fullWidth Tweet-at-2014-09-05.png alt="Conque Shell" %}
+{% image fullWidth Tweet-at-2014-09-05.png alt="Tweet at 2014-09-05" %}
