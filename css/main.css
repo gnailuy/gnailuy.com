@@ -158,3 +158,41 @@ a:visited { color: #a0a; }
 .post pre.terminal code {
   background-color: #333;
 }
+
+/* table */
+table {
+  margin-bottom: 20px;
+  max-width: 100%;
+  border-collapse: collapse;
+  transition: all 0.3s;
+  border: 1px solid rgba(0,0,0,0.167);
+}
+table {
+  border-collapse: collapse;
+}
+table thead>tr {
+  background-color: rgba(249,249,249,0.9);
+}
+table thead tr th {
+  border: 1px solid rgba(0,0,0,0.167);
+  border-top: 0px none;
+  border-bottom-width: 2px;
+  vertical-align: bottom;
+  padding: 4px;
+}
+table tbody tr td {
+  border: 1px solid rgba(0,0,0,0.167);
+  vertical-align: top;
+  padding: 4px;
+}
+
+/* blockquote */
+blockquote {
+  background: #f9f9f9;
+  border-left: 5px solid #ccc;
+  margin: 1.5em 5px;
+  padding: 0.5em 7px;
+}
+blockquote p {
+  display: inline;
+}

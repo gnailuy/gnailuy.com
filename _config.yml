@@ -1,6 +1,8 @@
 # Site Information
 name: .-- .. - .... .-.. --- ...- .
 markdown: redcarpet
+redcarpet:
+    extensions: ["autolink", "no_intra_emphasis", "tables", "with_toc_data"]
 highlighter: pygments
 permalink: pretty
 timezone: Asia/Shanghai
