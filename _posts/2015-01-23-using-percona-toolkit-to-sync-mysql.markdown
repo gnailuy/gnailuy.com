@@ -97,6 +97,22 @@ pt-table-sync --execute -u ${USER_NAME} -p${PASSWORD} -d ${DATABASE_NAME} \
 
 如果对 `--print` 出的结果没有异议，那么就可以真正的执行同步命令了。
 
+## 在 Slave 机器上同步 Master 到本地数据库
+
+我在一个 1 Master + 3 Slaves 的数据库集群上用上述命令，尝试将 Master 同步到所有的 Slaves，
+但是发现最终只同步成功了其中一个 Slave，其他 Slave 机器还有些多于 Master 的数据没有删除。
+看文档的参数说明，没有看出个所以然来，可能是检测 Slave 时出现了问题。
+
+因此我又使用了下面的命令，从每个 Slave 上执行，将 Master 同步到本地 Slave。
+
+``` bash
+pt-table-sync --execute -u ${USER_NAME} -p${PASSWORD} -d ${DATABASE_NAME} \
+    --replicate=${DATABASE_NAME}.checksums --algorithms=Nibble,GroupBy,Stream \
+    --sync-to-master ${IP_OF_THIS_SLAVE}
+```
+
+这次成功把所有 Slave 都同步成功了。
+
 [ptookit]:      http://www.percona.com/
 [downloads]:    http://www.percona.com/doc/percona-toolkit/2.2/installation.html
 [checksumtool]: http://www.percona.com/doc/percona-toolkit/2.2/pt-table-checksum.html
