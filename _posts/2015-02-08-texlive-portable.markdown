@@ -21,7 +21,7 @@ Virtual Box 上的一台 Archlinux 虚拟机上去。
 
 安装 TexLive 时，我按 `V` 选择了 Portable 模式，安装路径改成了 `/opt/texlive/`。
 于是安装完成后，我还需要把 bin, man 等资源加到系统搜索路径中去。
-这里，可以直接把 `/opt/texlive/bin/x86_64-linux/` 加到 `PATH` 变量里，
+这里，可以直接在 `PATH` 变量中加入路径 `/opt/texlive/bin/x86_64-linux/`，
 也可以像老的 TexLive 里那样为各个文件创建软链接。
 
 新的 TexLive 安装时我没有看到创建软链接的选项，
