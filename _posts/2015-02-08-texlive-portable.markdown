@@ -12,7 +12,8 @@ Virtual Box 上的一台 Archlinux 虚拟机上去。
 <!-- more -->
 
 先要吐个槽，天国的网络越来越妈蛋的没法用了，TexLive 正常下载无论如何速度上不去。
-于是我只好请迅雷资深会员 @Gene 同学帮忙下载了最新的 [TexLive ISO Image][texliveDVD]，
+于是我只好请迅雷资深会员及迅雷小王子 @Gene 同学帮忙下载了最新的
+[TexLive ISO Image][texliveDVD]，
 并回报以三部好片，@Gene 同学表示看到片很高兴。
 
 开始安装的时候，发现虚拟机的磁盘不够用了。
