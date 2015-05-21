@@ -54,8 +54,11 @@ Webhook 的[官方文档][webhook]里推荐了 [Sinatra][sinatrarb]，用来搭�
 就调用 [`update.sh`][update-script] 脚本执行具体的更新。
 
 在 [21 行][line-21] 中对比 payload 校验和的地方有个 `GITHUB_TOKEN`，这个值我是通过新建了一个文件 `/etc/environment.githook`，
-其中使用 `export GITHUB_TOKEN=xxx` 指定的，Sinatra 服务的[启动脚本][githook-script]这一行中 source 了这个文件。
+在其中使用 `export GITHUB_TOKEN=xxx` 指定的。
+Sinatra 服务的[启动脚本][githook-script]这一行中 source 了这个文件。
 这个 Token 就是在 Github 项目的 Settings 页面中创建 Webhook 时可以填写的 Secret 值。
+此外，在这个文件中还指定了执行 `update.sh` 脚本的用户名，Webhook 服务会 [`sudo`][line-13] 到这个用户来执行脚本，
+这里需要确保该用户可以被服务运行所在的用户免密码 `sudo`。
 
 最后，上述代码对应的 Payload URL 当然就是 `http://direct.gnailuy.com:20182/push` 了。
 创建这个 Webhook 后，Github 就会在 push 时通知这个 API。
@@ -72,3 +75,4 @@ Webhook 的[官方文档][webhook]里推荐了 [Sinatra][sinatrarb]，用来搭�
 [post-request]:     https://github.com/gnailuy/githook/blob/master/server.rb#L7
 [update-script]:    https://github.com/gnailuy/githook/blob/master/update.sh
 [line-21]:          https://github.com/gnailuy/githook/blob/master/server.rb#L21
+[line-13]:          https://github.com/gnailuy/githook/blob/master/server.rb#L13
