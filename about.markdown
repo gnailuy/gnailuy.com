@@ -5,7 +5,10 @@ comment: true
 permalink: /about/index.html
 ---
 
-Hi there! I'm a data platform software engineer at [umeng.com][umeng], and was graduated from the College of Computer Science & Technology at [Harbin Engineering University][heu]. Welcome to my blog! Below is some brief information about me.
+Hi there! I'm a senior software engineer of data platform at [umeng.com][umeng],
+and was graduated from the College of Computer Science & Technology
+at [Harbin Engineering University][heu].
+Welcome to my blog! Below is some brief information about me.
 
 Basic Info:
 
@@ -17,10 +20,10 @@ Basic Info:
 Few facts about me:
 
 * Currently working on Hadoop/HBase platform at Umeng
-* C / C++ and Java programmer, knows Python, Bash Script, Perl, Gnu Asm etc.
+* C / C++ and Java programmer, knows Go, Python, Bash Script, Perl, Gnu Asm etc.
 * Linuxer
 * Love Docker
-* Chinese native speaker, Speaking English, e cominciando a imparare l'italiano
+* Chinese native speaker, speaking English, e sto imparando l’italiano
 
 [umeng]:    http://www.umeng.com
 [heu]:      http://english.hrbeu.edu.cn
