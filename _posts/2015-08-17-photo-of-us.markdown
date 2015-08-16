@@ -1,0 +1,24 @@
+--- 
+layout: post
+title: "Po 一张合影"
+date: 2015-08-17 00:50:45
+categories: [ me ]
+---
+
+如题。
+
+As titled.
+
+<!-- more -->
+
+<center>
+{% image halfWidth US.jpg alt="US" %}
+</center>
+
+好久没写文章了，不过实在是还没主意写啥，Po 一张我和我女朋友的合影代替吧，如上。
+
+下面是中英对照：
+
+It's been too long since my last post here, but I don't have any idea in mind
+of what to write right now,
+so let me update my site with a photo of my girlfriend and me, as above.
