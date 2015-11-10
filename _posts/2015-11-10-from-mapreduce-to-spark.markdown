@@ -120,7 +120,8 @@ RDD 这种数据模型的设计和其上的操作，较之 MapReduce 模型中�
 是一种更灵活的数据处理模型。
 
 Transformations 操作是惰性的，只有在进行 Action 操作时，
-Spark 才会回溯要进行这次 Action 依赖的所有 Transformations，从初始 RDD 开始逐步计算。
+Spark 才会回溯要进行这次 Action 依赖的所有 Transformations，
+从创建初始 RDD 开始逐步计算。
 采用惰性计算，Spark 可以对整个计算流程进行必要的优化，以加快运行速度；
 同时，Spark 会维护 RDD 的血缘关系，当出现节点失效造成 RDD 丢失时，
 Spark 可以依照血缘关系再造 RDD，从而容忍集群中的机器故障；
