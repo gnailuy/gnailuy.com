@@ -19,11 +19,12 @@ Basic Info:
 
 Few facts about me:
 
-* Currently working on Hadoop/HBase platform at Umeng
-* C/C++ and Java programmer, knows Go, Python, Bash Script, Perl, Gnu Asm etc.
+* Currently working on the Data Platform at Umeng, with Hadoop/HBase/Spark in daily life
+* C/C++ and Java programmer, knows Go, Python, Bash Script, etc., and have a girlfriend
 * Linuxer, Archlinux user
 * Love Docker
 * Chinese native speaker, speaking English, e sto imparando l’italiano
 
 [umeng]:    http://www.umeng.com
 [heu]:      http://english.hrbeu.edu.cn
+
