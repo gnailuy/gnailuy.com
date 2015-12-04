@@ -36,5 +36,7 @@ image:
         # Proportional preset
         fullWidth:
             width: 630
+        twoThirdsWidth:
+            width: 420
         halfWidth:
             width: 315

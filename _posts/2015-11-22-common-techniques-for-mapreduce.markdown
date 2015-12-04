@@ -222,5 +222,17 @@ MapReduce 适用于对大批量、不能全部加载到内存的数据进行批�
 这本书用 200 多页的篇幅，介绍了常见的一些 MapReduce 算法设计模式，
 是一本不错的设计指南。
 
+#### TheFortyTwo
+
+我们数据平台的程序员们做了一个微信公众号，叫做 **TheFortyTwo**，
+我们会在工作之余，每周为大家推送原创技术文章，或者优秀的技术文章一手翻译，
+目前主要关注于数据处理领域，但也并无严格限制。
+上面这篇文章也发表在了这个公众号上面，欢迎大家搜索 **TheFortyTwo**，
+或者微信扫描下面二维码，关注我们。
+
+<center>
+{% image twoThirdsWidth thefortytwo.png alt="TheFortyTwo" %}
+</center>
+
 [mrdp]:     http://shop.oreilly.com/product/0636920025122.do
 
