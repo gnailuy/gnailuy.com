@@ -1,0 +1,24 @@
+--- 
+layout: post
+title: "Happy New Year"
+date: 2016-01-06 12:05:55
+categories: [ me ]
+---
+
+I just wrote another email to the future me at 2017 on the [futureme.org][futureme].
+
+<!-- more -->
+
+```
+     _____________
+    < Happy 2016! >
+     -------------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+```
+
+[futureme]:     https://www.futureme.org/
+
