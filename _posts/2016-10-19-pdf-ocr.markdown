@@ -1,0 +1,68 @@
+--- 
+layout: post
+title: "使用 OCR 技术从 PDF 扫描文档中识别文字"
+date: 2016-10-19 16:47:27
+categories: [ mac ]
+---
+
+今天拿到一个扫描的 PDF 文档，希望从里面搜索一些文字内容出来，于是调查了一下 OCR
+工具和库，通过简单的命令将 PDF 文档先转换成图片，然后识别出文字来。
+
+这里记个流水账先。
+
+<!-- more -->
+
+目前 OCR 开源实现里最著名的应该就是 [Tesseract][tesseract] 了，网上也有很多介绍，
+不多言，只说这个东西是可以识别很多种语言的，包括简体中文。
+
+Tesseract 包含 Tesseract 引擎和一个命令行工具，我这个小需求只用到了命令行工具，
+Mac 下安装这个工具很简单，例如用 brew：
+
+```bash
+sudo brew install tesseract
+```
+
+我的文档是中文的，因此需要让 Tesseract 能识别中文。
+可以到[这里][tessdata]下载中文训练数据 chi\_sim.traineddata，
+然后把这个训练数据文件放在 Tesseract 的数据目录里就好了，我这里是：
+`/usr/local/Cellar/tesseract/${version}/share/tessdata/`。
+
+Tesseract 的命令行工具很好用，比如识别一张图片 file.png 上的中文，只需要：
+
+```bash
+tesseract file.png outfile -l chi_sim
+```
+
+其中 `file.png` 是中文文本图片，`outfile` 是输出文件名前缀，后缀默认是 `.txt`，
+`-l` 指定了 OCR 使用的训练数据，这里使用了刚刚下载的这个 chi\_sim，用于识别中文。
+
+另外，tesseract 应该是不能直接输入 PDF 文档进行识别的，因此我首先用 ghostscript
+把 PDF 文档转成了一页一页的 PNG 图片：
+
+```bash
+gs -dBATCH -dNOPAUSE -sDEVICE=pnggray -r300 -dUseCropBox \
+        -sOutputFile=page-%05d.png doc.pdf
+```
+
+上面的命令会将 PDF 文档的每一页生成一副 PNG 图像文件，文件命名前缀是 `page-`，
+然后是五位数的页码和后缀。
+
+下面是我随便搞了一张图片的识别效果，
+字体合适时，汉字识别率还是很高的，偶尔会有一些错误，不过标点和夹杂的英文识别错误比较多。
+
+<center>
+{% image fullWidth sample.png alt="Sample Image" %}
+</center>
+
+<center>
+{% image fullWidth ocr.png alt="OCR Result" %}
+</center>
+
+如果需要进一步提高 OCR 的识别率，一方面按照官方文档所说，可以对图片进行预处理，
+如降噪、旋转、二值化等，另一方面还可以针对特殊字体自己训练数据，
+例如上面例子中这个字体的'不'字总是被识别成'爪'字，就是可以通过训练纠正过来的，
+这方面网上有资料，我还没有做过。
+
+[tesseract]:    https://github.com/tesseract-ocr/tesseract
+[tessdata]:     https://github.com/tesseract-ocr/tessdata
+
