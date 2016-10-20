@@ -20,7 +20,7 @@ Basic Info:
 Few facts about me:
 
 * Currently working on the Data Platform at Umeng, with Hadoop/HBase/Spark in life
-* C/C++ and Java/Scala programmer, knows Go, Python, Bash Script, etc., and have a girlfriend
+* C/C++ and Java/Scala programmer, knows Go, Python, etc., and have a girlfriend
 * Linuxer, one of the many many fans of Archlinux
 * I love Docker
 * Chinese native speaker, speaking English, e sto imparando l'italiano
