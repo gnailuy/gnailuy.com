@@ -63,11 +63,11 @@ export DOCKER_BUILD_APT_MIRROR=mirrors.163.com && make shell
 
 就可以使用良心厂网易的源了。
 
-#### Github 代码用 proxychains 下载
+#### Github 代码和软件包用 proxychains 下载
 
-Dockerfile 里可以看到，有不少地方现场下载 Github 上的代码来用，特别是 osxcross 这个库特别大。
+Dockerfile 里可以看到，有不少地方现场下载 Github 上的代码来用，特别是 osxcross，特别大。
 虽然墙几度屏蔽 Github 都因为受到了大力反弹而作罢，但党国为了给程序员们添堵，
-还是人为降低了 Github 的访问速度，因此这个校长还是得问候。
+还是人为降低了 Github 的访问速度，并且连接很容易中断，因此这个校长还是得问候。
 
 命令行工具翻墙有一个神器叫做 proxychains，
 可以自行 Google 或者查看[官方介绍][proxychains]，下面我写一下怎么用。
@@ -81,15 +81,15 @@ Dockerfile 里可以看到，有不少地方现场下载 Github 上的代码来�
 3. 最后，所有 git clone 前面都加上 proxychains 命令就可以了。
 
 同样的，curl 命令前面也可以加上 proxychains 来进行代理，
-不过这个 Dockerfile 里的很多地方都是使用类似下面这种命令来下载包的：
+不过这个 Dockerfile 里的很多地方都是使用类似下面这种命令来下载和解压包的：
 
 ``` bash
 curl -fsSl "https://example.com/xxx.tar.gz" | tar -xzC /path/to/extract/
 ```
 
 因为 debian jessie 中的 proxychains 版本 3 还不支持静默选项，
-所以 proxychains 的一些标准输出会被丢给 tar，导致不能解压。
-可以考虑升级 proxychains4 并使用 `-q` 选项来禁止 proxychains 的输出，
+所以 proxychains 的一些标准输出会经过管道被丢给 tar，导致 tar 不能解压。
+可以考虑手动安装 proxychains4 并使用 `-q` 选项来禁止 proxychains 的输出，
 不过我没有试过，而是简单的把 curl 命令改成下面这样：
 
 ``` bash
@@ -98,6 +98,10 @@ proxychains curl -fsSl "https://example.com/xxx.tar.gz" -o /tmp/xxx.tar.gz \
 ```
 
 先用代理下载把文件保存下来，然后再解压就可以了。
+
+最后，Dockerfile 里还有一些地方下载大的软件包会受到干扰，比如
+`contrib/download-frozen-image-v2.sh`，都可以简单的在命令行前面加上 proxychains
+来避免中断。
 
 #### PIP 配置豆瓣源
 
