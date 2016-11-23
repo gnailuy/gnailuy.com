@@ -141,8 +141,9 @@ docker build --build-arg APT_MIRROR=$DOCKER_BUILD_APT_MIRROR -t organization/ima
 
 ### 阅读 Docker 代码：vimgo
 
-工具没什么好说的，vimgo 可能是 Golang 开发现在最好的 'IDE' 了吧，
-不知道啥时候 JetBrains 会搞一个 Golang 的 IDE，嘿嘿 =￣ω￣=
+工具没什么好说的，我用的是 vimgo，从开始学习 Golang 就一直用它，
+今天 (20161123) 才刚刚发现 [Atom go-plus][go-plus] 和 [IntelliJ Go][intellij-go] 都不错。
+不知道啥时候 JetBrains 会搞一个专门的 Golang IDE，嘿嘿 =￣ω￣=
 
 我现在读的代码还不太成体系，以后如果有心得的话再单独写吧。
 这篇文章主要是解决了一个在别国不存在的问题，感谢那谁谁谁全家，并给病魔加油。
@@ -150,4 +151,6 @@ docker build --build-arg APT_MIRROR=$DOCKER_BUILD_APT_MIRROR -t organization/ima
 [docker-dev]:   https://docs.docker.com/opensource/project/set-up-dev-env/
 [proxychains]:  http://proxychains.sourceforge.net/
 [pypi-douban]:  http://pypi.doubanio.com/
+[go-plus]:      https://atom.io/packages/go-plus
+[intellij-go]:  http://go-ide.com/
 
