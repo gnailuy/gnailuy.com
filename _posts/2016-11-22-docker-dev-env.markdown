@@ -120,7 +120,7 @@ FROM debian:jessie
 ARG APT_MIRROR=deb.debian.org
 RUN sed -ri "s/(httpredir|deb).debian.org/$APT_MIRROR/g" /etc/apt/sources.list
 
-RUN apt-get update && apt-get install -y proxychains pip
+RUN apt-get update && apt-get install -y proxychains python-pip
 
 # Add proxychains configuration
 COPY gfw/proxychains.conf /etc/proxychains.conf
