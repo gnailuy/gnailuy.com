@@ -78,7 +78,26 @@ Dockerfile 里可以看到，有不少地方现场下载 Github 上的代码来�
 2. 然后，可以修改 Dockerfile，在开头的 apt-get 列表里加上 proxychains，
 再用 COPY 命令把 proxychains.conf 添加到 /etc/ 目录里，就可以了。
 
-3. 最后，所有 git clone 前面都加上 proxychains 命令就可以了，同理 curl 命令前面也加上它。
+3. 最后，所有 git clone 前面都加上 proxychains 命令就可以了。
+
+同样的，curl 命令前面也可以加上 proxychains 来进行代理，
+不过这个 Dockerfile 里的很多地方都是使用类似下面这种命令来下载包的：
+
+``` bash
+curl -fsSl "https://example.com/xxx.tar.gz" | tar -xzC /path/to/extract/
+```
+
+因为 debian jessie 中的 proxychains 版本 3 还不支持静默选项，
+所以 proxychains 的一些标准输出会被丢给 tar，导致不能解压。
+可以考虑升级 proxychains4 并使用 `-q` 选项来禁止 proxychains 的输出，
+不过我没有试过，而是简单的把 curl 命令改成下面这样：
+
+``` bash
+proxychains curl -fsSl "https://example.com/xxx.tar.gz" -o /tmp/xxx.tar.gz \
+    && tar xzf /tmp/xxx.tar.gz -C /path/to/extract/
+```
+
+先用代理下载把文件保存下来，然后再解压就可以了。
 
 #### PIP 配置豆瓣源
 
