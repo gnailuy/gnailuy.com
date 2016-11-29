@@ -5,14 +5,14 @@ comment: true
 permalink: /about/index.html
 ---
 
-Hi there! I'm a senior software engineer on the data platform at [umeng.com][umeng],
+Hi there! I'm a senior software engineer of the data platform at [umeng.com][umeng],
 and I was graduated from the College of Computer Science & Technology at
 [Harbin Engineering University][heu].
 Welcome to my blog! Below is some brief information about me.
 
 Basic Info:
 
-* Name / Gender - Yuliang Jin / Male
+* Name / Gender - Yuliang Jin / Rational
 * Location - Beijing, China
 * @work - `echo amlueXVsaWFuZ0B1bWVuZy5jb20K | base64 -d -` (or `base64 -D` on Mac)
 * @home - `echo c2hlbGRvbi55LmppbkBnbWFpbC5jb20K | base64 -d -`
