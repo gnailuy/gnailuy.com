@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: "设置路由表使国内 IP 不走 VPN 线路"
-date: 2011-08-07 16:55:44
+date: 2011-08-07 16:55:44 +0800
 categories: [ linux ]
 ---
 

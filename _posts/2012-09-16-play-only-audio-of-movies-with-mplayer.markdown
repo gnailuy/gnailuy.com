@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: Play only audio of movies with mplayer
-date: 2012-09-16 19:54:36
+date: 2012-09-16 19:54:36 +0800
 categories: [ linux ]
 ---
 

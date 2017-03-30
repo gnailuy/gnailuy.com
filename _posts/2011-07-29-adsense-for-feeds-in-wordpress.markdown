@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: Adsense for Feeds in Wordpress
-date: 2011-07-29 12:46:15
+date: 2011-07-29 12:46:15 +0800
 categories: [ internet ]
 ---
 

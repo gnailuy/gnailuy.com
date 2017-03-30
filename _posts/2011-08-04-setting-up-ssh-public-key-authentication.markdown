@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: Setting up SSH Public Key Authentication
-date: 2011-08-04 17:40:49
+date: 2011-08-04 17:40:49 +0800
 categories: [ linux ]
 ---
 

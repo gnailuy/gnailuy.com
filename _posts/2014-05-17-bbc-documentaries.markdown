@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: "最近在看 BBC 的纪录片"
-date: 2014-05-25 22:53:00
+date: 2014-05-25 22:53:00 +0800
 categories: [ me ]
 ---
 

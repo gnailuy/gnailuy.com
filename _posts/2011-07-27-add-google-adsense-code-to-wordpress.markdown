@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: Add Google Adsense code to Wordpress
-date: 2011-07-27 18:21:09
+date: 2011-07-27 18:21:09 +0800
 categories: [ internet ]
 ---
 
