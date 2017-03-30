@@ -5,8 +5,9 @@ date: 2017-03-30 11:57:29 +0800
 categories: [ linux ]
 ---
 
-Ever in a situation when you want to find a string pattern from a large
-source code repository, with tons of text files, binarys, and also hidden directories?
+Ever in a situation when you want to find files containing some string pattern,
+from a large source code repository with tons of text files, binarys,
+and also hidden directories?
 
 <!-- more -->
 
