@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: "Portable Installation of TexLive"
-date: 2015-02-08 01:35:07 +0800
+date: 2015-02-08 01:35:07
 latex: true
 categories: [ linux ]
 ---

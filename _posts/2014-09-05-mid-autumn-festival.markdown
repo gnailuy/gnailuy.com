@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: "马上又要中秋节了"
-date: 2014-09-05 16:58:15 +0800
+date: 2014-09-05 16:58:15
 categories: [ me ]
 ---
 

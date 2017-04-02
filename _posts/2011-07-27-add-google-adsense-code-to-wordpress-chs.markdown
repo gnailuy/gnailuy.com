@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: "Wordpress 添加 Google Adsense 代码"
-date: 2011-07-27 18:22:23 +0800
+date: 2011-07-27 18:22:23
 categories: [ internet ]
 ---
 

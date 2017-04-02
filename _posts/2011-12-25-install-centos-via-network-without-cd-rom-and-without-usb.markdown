@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: Install CentOS via network without CD-ROM and without USB
-date: 2011-12-25 23:03:40 +0800
+date: 2011-12-25 23:03:40
 categories: [ linux ]
 ---
 

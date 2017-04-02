@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: "Linux 下为移动硬盘安装 Puppy Linux 和 GRUB 引导"
-date: 2011-08-15 17:41:38 +0800
+date: 2011-08-15 17:41:38
 categories: [ linux ]
 ---
 

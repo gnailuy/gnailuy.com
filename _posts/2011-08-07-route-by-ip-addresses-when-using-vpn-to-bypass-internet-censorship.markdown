@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: Routing Settings when Bypassing Internet Censorship via VPN
-date: 2011-08-07 16:30:44 +0800
+date: 2011-08-07 16:30:44
 categories: [ linux ]
 ---
 

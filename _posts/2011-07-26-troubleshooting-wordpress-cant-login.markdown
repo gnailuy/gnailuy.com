@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: "Troubleshooting: wordpress can't login"
-date: 2011-07-26 15:45:23 +0800
+date: 2011-07-26 15:45:23
 categories: [ internet ]
 ---
 
