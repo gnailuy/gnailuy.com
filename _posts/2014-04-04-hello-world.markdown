@@ -1,7 +1,7 @@
 --- 
 layout: post
-title:  "Hello World!"
-date:   2014-04-04 15:25:42
+title: "Hello World!"
+date: 2014-04-04 15:25:42
 categories: [ me ]
 ---
 
