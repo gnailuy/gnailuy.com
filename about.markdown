@@ -11,7 +11,7 @@ Currently I am working in a small startup team as a backend and data developer.
 Before August 2017,
 I was a senior software engineer of the data platform at [umeng.com][umeng],
 and I was graduated from the College of Computer Science & Technology at
-[Harbin Engineering University][heu].
+[Harbin Engineering University][heu] in March 2013.
 Welcome to my blog! Below is some brief information about me.
 
 Basic Info:
