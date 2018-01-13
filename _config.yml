@@ -11,8 +11,8 @@ baseurl: /
 
 # Author Information
 author: Yuliang Jin
-authorMsg: Data Platform Engineer@Umeng
-authorEmail: jinyuliang@umeng.com
+authorMsg: A Developer
+authorEmail: sheldon.y.jin@gmail.com
 authorNickname: gnailuy
 
 # Frequently Used URL
@@ -40,3 +40,4 @@ image:
             width: 420
         halfWidth:
             width: 315
+
