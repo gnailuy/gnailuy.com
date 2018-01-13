@@ -5,12 +5,12 @@ comment: true
 permalink: /about/index.html
 ---
 
-Hi there! I am gnailuy (pronounced reversedly as [ɥy2 ljaŋ4]),
+Hi there! I'm gnailuy (pronounced reversedly as [ɥy2 ljaŋ4]),
 a software developer from China.
 Currently I am working in a small startup team as a backend and data developer.
 Before August 2017,
 I was a senior software engineer of the data platform at [umeng.com][umeng],
-and was graduated from the College of Computer Science & Technology at
+and I was graduated from the College of Computer Science & Technology at
 [Harbin Engineering University][heu].
 Welcome to my blog! Below is some brief information about me.
 
@@ -23,7 +23,7 @@ Basic Info:
 Few facts about me:
 
 * Worked on the Data Platform at Umeng for 4+ years, with Hadoop/HBase/Spark in life
-* C/C++, Java/Scala and Python programmer, knows Go, SQL, etc., and have a girlfriend
+* C/C++, Java/Scala and Python programmer, knows Go, Rust, etc., and have a girlfriend
 * Linuxer, one of the many lovers of Archlinux, and I fan Docker
 * Chinese native speaker, speaking English, e sto imparando l'italiano
 

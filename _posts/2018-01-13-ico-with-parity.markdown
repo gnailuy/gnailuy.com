@@ -123,9 +123,14 @@ parity
 ```
 
 它就运行起来了。然后可以在浏览器里访问地址 `http://localhost:8180`，
-就进入到了 Parity 的 WebUI 界面。
-这时候 Parity 也是会开始同步区块链数据，但它不同步全部区块，所以快很多。
-同步的同时，如果是第一次使用，可以顺便根据向导指引，创建一个新帐号。
+就进入到了 Parity 的 WebUI 主页，大概是下面这个样子：
+
+<center>
+{% image fullWidth home.png alt="Parity" %}
+</center>
+
+这时候 Parity 也会开始同步区块链数据，但它不是同步全部区块的所有数据，所以快很多。
+同步的同时，如果是你第一次使用，可以顺便根据向导指引，创建一个新帐号。
 
 此外，还可以利用同步时间去买一丢丢以太币 ETH
 (如果你在测试链，或者开发链、私有链上测试，就不用花钱了)，
@@ -134,15 +139,31 @@ parity
 而执行代码本身和 Bitcoin 区块链上的交易一样，都有手续费
 (Ethereum 拥有一套以 Gas 为单位的计费手段)。
 
-按照 10 分钟文的规则，同步和创建帐号不计时，也应该假设你已经有了 ETH。
+同步完成后，它的状态页面会变成这个样子：
+
+<center>
+{% image fullWidth status.png alt="Parity Status" %}
+</center>
+
+按照 10 分钟文的规则，同步和创建帐号不计时，也应该是假设你已经有了 ETH。
 那么下面进入一分钟时间，步骤如下：
 
-* 点击界面上方的 APPLICATIONS 选项卡，进入应用页面；
+* 点击 WebUI 主页上方的 APPLICATIONS 选项卡，进入应用页面；
+
+<center>
+{% image fullWidth apps.png alt="Parity Apps" %}
+</center>
+
 * 点击一个叫做 TOKEN DEPLOYMENT 的应用，进入这个应用界面；
+
+<center>
+{% image fullWidth token_deployment.png alt="Token Deployment" %}
+</center>
+
 * 点击右下方的 Deploy 按钮，进入下面这个界面；
 
 <center>
-{% image fullWidth ico.jpg alt="ICO" %}
+{% image fullWidth deploy.png alt="ICO" %}
 </center>
 
 * 花半分钟思考你的代币叫什么名字，2 到 32 个字符；
