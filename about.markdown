@@ -25,7 +25,7 @@ Few facts about me:
 * Worked on the Data Platform at Umeng for 4+ years, with Hadoop/HBase/Spark in life
 * C/C++, Java/Scala and Python programmer, knows Go, Rust, etc., and have a girlfriend
 * Linuxer, one of the many lovers of Archlinux, and I fan Docker
-* Chinese native speaker, speaking English, e sto imparando l'italiano
+* Chinese native speaker, speak English, e sto imparando l'italiano
 
 [umeng]:    http://www.umeng.com
 [heu]:      http://english.hrbeu.edu.cn
