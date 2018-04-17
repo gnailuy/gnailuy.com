@@ -27,7 +27,7 @@ pdfkit 的 API 非常简单，它就三个函数，分别支持从 URL、文件�
 
 开发起来很容易，部署时候遇到了一点小问题，主要是 wkhtmltopdf 和字体的问题。
 我用 Docker 部署 API，基础镜像用的是 Python on Alpine。
-在 Mac 上我就直接用 brew 安装了 wkhtmltopdf，就可以用了，但是 Linux 服务器上需要额外说一下。
+在 Mac 上我直接用 brew 安装了 wkhtmltopdf 就可以用了，但是 Linux 服务器上需要额外处理一下。
 
 首先，Alpine 的主仓库里还没有 wkhtmltopdf，所以需要从 testing 仓库来安装：
 
@@ -55,7 +55,8 @@ killall Xvfb
 
 这样修改完之后，因为缺少字体，所以打印出来中文会乱码。
 因为文档样式要求，我没有安装开源字体，
-而是直接把 Mac 里的 Songti.ttc 拷贝到了 Docker 里面，放在了 `/usr/share/fonts/` 目录。
+而是直接把 Mac 里的 Songti.ttc 拷贝到了 Docker 镜像里面，
+字体文件直接放在了系统 `/usr/share/fonts/` 目录。
 
 ## 另一个没实现方案
 
@@ -64,15 +65,16 @@ killall Xvfb
 首先写一个 LaTeX 模板，用 [Pandoc][pandoc] 把传入的数据渲染进 LaTeX 模板，生成 tex 源码文件。
 然后用 `pdflatex` 生成 PDF，返回地址。
 
-这个方案主要的缺点是 Python 直接和系统命令打交道，没有 Wrapper。
-另外需要安装的东西比较多，Pandoc 和 LaTeX 是必须的，字体也一样需要额外安装。
-不过 LaTeX 排版效果会更好一点，速度的话我这个小文档两者感觉差不多。
+这个方案主要的缺点是 Python 需要直接和很多系统命令打交道，好用的 Wrapper 得额外开发。
+另外需要安装的东西比较多，Pandoc 和 LaTeX 是必须的，中文字体也一样需要额外安装。
+不过如果有要求的话，LaTeX 排版效果会更好一点，速度的话我这个小文档两者感觉差不多。
 
 Docker 里安装 Pandoc 没问题，LaTeX 的话装 Texlive 就太大了，也没必要。
 我找到有一个 [MiKTeX][miktex] 的 [Docker 镜像][miktexDocker]，大小还可以，如果需要以后可以用。
 
 ``` bash
-docker run -it -v miktex:/miktex/.miktex -v `pwd`:/miktex/work miktex/miktex pdflatex main.tex
+docker run -it -v miktex:/miktex/.miktex -v `pwd`:/miktex/work miktex/miktex \
+    pdflatex main.tex
 ```
 
 第一次生成 PDF 时会从网络上下载一些依赖包，之后再生成同一个模板制作的 PDF，速度还是很快的。
