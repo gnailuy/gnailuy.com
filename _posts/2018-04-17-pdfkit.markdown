@@ -1,0 +1,85 @@
+---
+layout: post
+title: "Python 使用 pdfkit 生成 PDF 文档"
+date: 2018-04-17 11:21:31 +0800
+categories: [ linux ]
+---
+
+最近有个动态生成 PDF 文档的需求，需要做一个 API，接收 POST 数据，生成 PDF 文档并返回文件对象地址。
+我调研了一下，测试了两个方案，最后选择了使用 [pdfkit][pdfkit] 这个库来实现。
+
+<!-- more -->
+
+## pdfkit 方案
+
+pdfkit 这个库是一个叫做 [wkhtmltopdf][wkhtmltopdf] 的开源项目的一个 Wrapper，
+它就直接调用 wkhtmltopdf 的命令行工具实现生成 PDF 文档的功能，所以需要安装 wkhtmltopdf 才能使用。
+
+pdfkit 的 API 非常简单，它就三个函数，分别支持从 URL、文件或者字符串传入 HTML 文档，
+然后根据传入的文件名参数输出一个 PDF 文档。
+控制 PDF 的输出样式可以传入一个叫 options 的字典作为参数，支持的选项都是 wkhtmltopdf 的选项，
+官方文档里面有很详细的说明。
+此外 pdfkit 文档还给出了一个自定义 CSS 的使用样例，不过我没有用上。
+
+最后我用 Flask 做了一个 API，用 POST 传进来的数据渲染一个 HTML 模板，然后把 HTML 交给 pdfkit，
+处理一下文件名生成策略和文件存储，这个 API 就搞成了。
+结论是 pdfkit 还是蛮好用的，虽然速度不算很快。
+
+开发起来很容易，部署时候遇到了一点小问题，主要是 wkhtmltopdf 和字体的问题。
+我用 Docker 部署 API，基础镜像用的是 Python on Alpine。
+在 Mac 上我就直接用 brew 安装了 wkhtmltopdf，就可以用了，但是 Linux 服务器上需要额外说一下。
+
+首先，Alpine 的主仓库里还没有 wkhtmltopdf，所以需要从 testing 仓库来安装：
+
+``` bash
+apk add --no-cache qt5-qtbase-dev wkhtmltopdf \
+    --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
+    --allow-untrusted
+```
+
+此外，服务器上没有 X，所以用 xvfb 来代替，并且安装了字体管理器。
+
+``` bash
+apk add --no-cache tzdata xvfb ttf-freefont fontconfig dbus
+```
+
+然后把系统安装的 wkhtmltopdf 可执行文件改名为 wkhtmltopdf-origin，
+用下面这个脚本替代 wkhtmltopdf 命令，记得加执行权限：
+
+``` bash
+#!/usr/bin/env sh
+Xvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset &
+DISPLAY=:0.0 wkhtmltopdf-origin $@
+killall Xvfb
+```
+
+这样修改完之后，因为缺少字体，所以打印出来中文会乱码。
+因为文档样式要求，我没有安装开源字体，
+而是直接把 Mac 里的 Songti.ttc 拷贝到了 Docker 里面，放在了 `/usr/share/fonts/` 目录。
+
+## 另一个没实现方案
+
+使用 pdfkit 之前，我本来打算用 LaTeX 来实现 PDF 生成，思路大概是这样的。
+
+首先写一个 LaTeX 模板，用 [Pandoc][pandoc] 把传入的数据渲染进 LaTeX 模板，生成 tex 源码文件。
+然后用 `pdflatex` 生成 PDF，返回地址。
+
+这个方案主要的缺点是 Python 直接和系统命令打交道，没有 Wrapper。
+另外需要安装的东西比较多，Pandoc 和 LaTeX 是必须的，字体也一样需要额外安装。
+不过 LaTeX 排版效果会更好一点，速度的话我这个小文档两者感觉差不多。
+
+Docker 里安装 Pandoc 没问题，LaTeX 的话装 Texlive 就太大了，也没必要。
+我找到有一个 [MiKTeX][miktex] 的 [Docker 镜像][miktexDocker]，大小还可以，如果需要以后可以用。
+
+``` bash
+docker run -it -v miktex:/miktex/.miktex -v `pwd`:/miktex/work miktex/miktex pdflatex main.tex
+```
+
+第一次生成 PDF 时会从网络上下载一些依赖包，之后再生成同一个模板制作的 PDF，速度还是很快的。
+
+[pdfkit]:       https://pypi.org/project/pdfkit/
+[wkhtmltopdf]:  https://wkhtmltopdf.org/
+[pandoc]:       https://pandoc.org/
+[miktex]:       https://miktex.org/
+[miktexDocker]: https://miktex.org/howto/miktex-docker
+
