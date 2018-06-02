@@ -1,17 +1,17 @@
 --- 
 layout: post
-title: "Grep a string pattern from a large source code repository"
+title: "Excluding directories when performing a grep search"
 date: 2017-03-30 11:57:29 +0800
 categories: [ linux ]
 ---
 
-Ever in a situation when you want to find files containing some string pattern,
-from a large source code repository with tons of text files, binarys,
-and also hidden directories?
+When we want to look for some pattern from files in a source code repository,
+say a Git repository.
+We often want to ignore those hidden directories such as `.git`, `.github`, etc.
 
 <!-- more -->
 
-Try the following command:
+The following command will do:
 
 ``` bash
 cd the-repository-directory/
@@ -19,6 +19,6 @@ find . \( -path ./.idea -o -path ./.git -o -path ./.github \) -prune -o \
     -type f -exec grep -I your-string-here {} +
 ```
 
-where .idea, .git, and .github are common hidden directories that you
-usually don't want to look into.
+In this command, the `.idea`, `.git`, and `.github` are common hidden directories
+that we usually don't want to look in.
 
