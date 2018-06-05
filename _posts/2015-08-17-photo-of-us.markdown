@@ -19,6 +19,6 @@ As titled.
 
 下面是中英对照：
 
-It's been too long since my last post here, but I don't have any idea in mind
-of what to write right now,
-so let me update my site with a photo of my girlfriend and me, as above.
+It has been very long since my last post here, but I do not have any idea
+of what to write right now.
+So, let me update my site with a photo of my girlfriend and me, as above.
