@@ -15,7 +15,7 @@ scp /path/to/filename username@hostname:/path/to/destination/directory/
 scp username@hostsname:/path/to/filename /path/to/local/directory/
 ```
 
-These commands and their deformation usually work fine.
+These commands and their deformations usually work fine.
 But when I tried to scp a file to my VPS this afternoon, a problem arose:
 
 ``` bash
