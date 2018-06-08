@@ -1,21 +1,21 @@
---- 
+---
 layout: post
 title: Routing Settings when Bypassing Internet Censorship via VPN
 date: 2011-08-07 16:30:44
 categories: [ linux ]
 ---
 
-Various techniques are in use by netizens in China to bypass the severe [Internet Censorship][gfw] the government has made.
-Among them, [Tor][tor], [SSH Tunneling][ssh-tunnel] and [VPN][vpn] are three of the safest and most popular solutions. I myself run a PPTP VPN service on a VPS in the US.
+Various techniques are in use by netizens in China to bypass the severe [Internet Censorship][gfw] by the government.
+Among them, [Tor][tor], [SSH Tunneling][ssh-tunnel], and [VPN][vpn] are three of the safest and most popular solutions. I run a PPTP VPN service on a VPS in the US.
 
 <!-- more -->
 
-Normally, a VPN configuration is global. Once a VPN connection is established, all network traffics will go through the VPN device.
-But we may want to access the IP addresses in China directly, because they are definitely not, and might never be, blocked by the 'Great Firewall'.
-Direct access will be very much faster than VPN, obviously.
+Usually, a VPN configuration is global. Once a VPN connection establishs, all network traffics will go through the VPN device.
+But we may want to access the IP addresses in China directly, because they are surely not, and might never be, blocked by the `Great Firewall`.
+Direct access is certainly faster than a VPN.
 
-Fortunately, there is an open source project called [Chnroutes][chnroutes] is designed to do this for us.
-This project provides a Python script, which will sift IP addresses in China from the file ['country-ipv4.lst'][ipv4-list] by the [APNIC][apnic],
+Fortunately, there is an open source project called [Chnroutes][chnroutes] which is designed to solve this problem for us.
+This project provides a Python script, which sifts IP addresses in China from the file ['country-ipv4.lst'][ipv4-list] by the [APNIC][apnic],
 and generate from these IP addresses two bash scripts, which can be used to set/unset kernel route table before/after a VPN connection is established/disconnected.
 
 Take PPTP VPN for example. First, we can download the Python script [`chnroutes_ovpn_linux`][ovpn-script] to your Linux box, add execution permission and then fire it:
@@ -25,22 +25,22 @@ chmod +x chnroutes_ovpn_linux
 ./chnroutes_ovpn_linux
 ```
 
-This will generate two script, `vpnup` and `vpndown`, in the current directory. We then add execution permission to them:
+This generates two scripts, `vpnup` and `vpndown`, in the current directory. We add execution permission to them:
 
 ``` bash
 chmod +x vpnup vpndown
 ```
 
-Next, we rename them and copy them ppp's configuration directory:
+Next, we rename them and copy them to ppp's configuration directory:
 
 ``` bash
 cp vpnup /etc/ppp/ip-pre-up
 cp vpndown /etc/ppp/ip-down.local
 ```
 
-After that, we have to disconnect and reconnect from VPN. Then all network traffics between you and Chinese local servers will not longer go through the VPN tunnel.
+After that, we have to disconnect and reconnect from our VPN. And now, all network traffics between you and those Chinese IPs will no longer go into the VPN tunnel.
 
-Chnroutes supports both openVPN and PPTP, and it can be used on Mac, Linux and Windows. I am using it on Fedora 14 with PPTP VPN. It works very well.
+Chnroutes supports both openVPN and PPTP, and it works on Mac, Linux, and Windows. I am using it on Fedora 14 with PPTP VPN. It works very well.
 
 (本文中文版[链接][chinese])
 
