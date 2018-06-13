@@ -5,8 +5,9 @@ date: 2011-07-15 17:19:37
 categories: [ linux ]
 ---
 
-It's very easy to change the IP address in Linux. We can use the command `ifconfig` to switch to a new IP address temporarily,
-or change it permanently by editing the network configuration file. In this post, we talk about how to change the MAC address in Linux.
+It's easy to change the MAC address in Linux.
+We can use the command `ifconfig` to switch to a new MAC address temporarily
+or change it permanently by editing the network configuration file.
 
 <!-- more -->
 
@@ -25,7 +26,7 @@ The above commands will take effect immediately. But if we reboot the system, th
 
 ### Permanent change of MAC address
 
-In order to change the MAC address permanently, we have to edit the network configuration file.
+To change the MAC address permanently, we have to edit the network configuration file.
 In Red Hat/CentOS/Fedora, it is `/etc/sysconfig/network-scripts/ifcfg-eth0`:
 
 ``` bash
@@ -45,8 +46,9 @@ To make the change take effect immediately, you should restart the network inter
 /etc/init.d/network restart
 ```
 
-In debian/ubuntu, the network interface is configured in file `/etc/network/interface`.
-And the syntax is totally different with those in Redhat-like system. But it is also very easy to change the MAC address:
+In debian/ubuntu, the network interface configuration is in the file `/etc/network/interface`.
+And the syntax is also different from those in a Redhat-like system.
+But it is still very easy to change the MAC address:
 
 ``` bash
 vi /etc/network/interface
