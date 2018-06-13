@@ -48,7 +48,7 @@ To make the change take effect immediately, you should restart the network inter
 
 In debian/ubuntu, the network interface configuration is in the file `/etc/network/interface`.
 And the syntax is also different from those in a Redhat-like system.
-But it is still very easy to change the MAC address:
+But it is still easy to change the MAC address:
 
 ``` bash
 vi /etc/network/interface
