@@ -7,10 +7,9 @@ permalink: /about/index.html
 
 Hi there! I'm gnailuy (pronounced reversedly as [ɥy2 ljaŋ4]), a software developer.
 Currently, I am working in a small startup team as a back-end and data programmer.
-Before August 2017,
-I was a senior software engineer of the data platform at [umeng.com][umeng],
-and I was graduated from the College of Computer Science & Technology at
-[Harbin Engineering University][heu] in March 2013.
+Before August 2017, I was a senior software engineer of the data platform at [umeng.com][umeng].
+I graduated from the College of Computer Science & Technology at the
+[Harbin Engineering University][heu] in March 2013, and have a master's degree in CS.
 
 Welcome to my blog! Below is some brief information about me.
 
