@@ -1,4 +1,4 @@
---- 
+---
 layout: post
 title: "在 Vim 中使用 Git 的插件: Fugitive"
 date: 2014-12-13 01:37:30

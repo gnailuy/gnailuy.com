@@ -1,4 +1,4 @@
---- 
+---
 layout: post
 title: 无光驱、无 USB，网络安装 CentOS
 date: 2011-12-25 23:02:33

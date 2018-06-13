@@ -1,4 +1,4 @@
---- 
+---
 layout: post
 title: "为 WordPress 的 RSS 添加 Adsense 广告"
 date: 2011-07-29 12:46:34

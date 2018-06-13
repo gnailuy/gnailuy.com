@@ -1,4 +1,4 @@
---- 
+---
 layout: post
 title: "GSL 科学计算库、随机变量的 Erlang 分布与 Weibull 分布"
 date: 2011-07-10 12:03:19

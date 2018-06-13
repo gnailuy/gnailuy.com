@@ -1,4 +1,4 @@
---- 
+---
 layout: post
 title: "CentOS VPS 上搭建 PPTP VPN"
 date: 2011-07-04 05:53:02

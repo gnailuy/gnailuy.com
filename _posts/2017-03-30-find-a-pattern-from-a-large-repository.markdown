@@ -1,4 +1,4 @@
---- 
+---
 layout: post
 title: "Excluding directories in a grep search"
 date: 2017-03-30 11:57:29 +0800
