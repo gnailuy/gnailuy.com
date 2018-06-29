@@ -125,7 +125,7 @@ COPY pip.conf /root/.pip/pip.conf
 
 ### 国情版 Dockerfile 模板
 
-说个题外话，如上的几项配置加在一起，可以攒出来下面一个 Dockerfile 模板，
+说个题外话，如上的几项配置加在一起，可以攒出来下面一个 [Dockerfile 模板][baseimage]，
 以后如果别的业务需要创建容器，可以直接从这个模板开始，多少免去些翻墙的痛苦：
 
 首先，把 `DOCKER_BUILD_APT_MIRROR` 变量配置好，最好是放在自己的 `~/.bashrc` 或者
@@ -176,4 +176,5 @@ docker build --build-arg APT_MIRROR=$DOCKER_BUILD_APT_MIRROR -t organization/ima
 [pypi-douban]:  http://pypi.doubanio.com/
 [go-plus]:      https://atom.io/packages/go-plus
 [intellij-go]:  http://go-ide.com/
+[baseimage]:    https://github.com/gnailuy/docker-gfw
 
