@@ -29,7 +29,7 @@ git log --graph
 展示的这样。
 
 Git 里面除了第一个 Commit 之外，其他 Commit 都有父 Commit。
-普通的 Commit 有一个 Commit，Merge Commit 则有两个父 Commit。
+普通的 Commit 有一个父 Commit，Merge Commit 则有两个父 Commit。
 
 一个 Commit 除了代表项目的一个历史状态，也代表和它父 Commit 相比，它做出了哪些修改。
 当你用命令：
