@@ -5,7 +5,7 @@
 #
 
 RETVAL=0
-prog="gnainx"
+prog="gnaiux"
 
 start() {
     echo -n $"Starting $prog:"
