@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Installing GRUB and Puppy Linux to Portable Hard Drive from Linux
-date: 2011-08-15 17:41:52
+date: 2011-08-15 17:41:52 +0800
 categories: [ linux ]
 ---
 

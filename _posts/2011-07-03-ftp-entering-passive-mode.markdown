@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "配置 iptables 后 FTP 停在 Entering Passive Mode 的问题"
-date: 2011-07-03 16:54:20
+date: 2011-07-03 16:54:20 +0800
 categories: [ linux ]
 ---
 

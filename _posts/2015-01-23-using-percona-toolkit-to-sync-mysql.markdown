@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "校验和修复 MySQL 主从数据库一致性"
-date: 2015-01-23 02:14:59
+date: 2015-01-23 02:14:59 +0800
 categories: [ linux ]
 ---
 

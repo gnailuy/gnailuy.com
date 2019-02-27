@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Spoofing MAC address in Archlinux
-date: 2011-10-19 07:51:40
+date: 2011-10-19 07:51:40 +0800
 categories: [ linux ]
 ---
 

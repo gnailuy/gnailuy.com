@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "旧文重读 -- 夜空下"
-date: 2011-08-10 21:58:45
+date: 2011-08-10 21:58:45 +0800
 categories: [ me ]
 ---
 

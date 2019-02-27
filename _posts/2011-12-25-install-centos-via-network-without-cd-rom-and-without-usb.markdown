@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Net-installing CentOS without CD-ROM and USB
-date: 2011-12-25 23:03:40
+date: 2011-12-25 23:03:40 +0800
 categories: [ linux ]
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Mac OS 中使用 launchd 自动启动 Shadowsocks"
-date: 2015-05-18 22:34:26
+date: 2015-05-18 22:34:26 +0800
 categories: [ mac ]
 ---
 

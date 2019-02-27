@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "又一个 VIM 配置文件"
-date: 2011-07-18 13:55:36
+date: 2011-07-18 13:55:36 +0800
 categories: [ linux ]
 ---
 

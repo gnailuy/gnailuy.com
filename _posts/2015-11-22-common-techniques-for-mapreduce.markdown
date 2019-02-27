@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Hadoop MapReduce 任务设计的几个常用技术"
-date: 2015-11-22 15:18:50
+date: 2015-11-22 15:18:50 +0800
 categories: [ dataplatform ]
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Archlinux 中伪装 MAC 地址"
-date: 2011-10-19 07:51:22
+date: 2011-10-19 07:51:22 +0800
 categories: [ linux ]
 ---
 
