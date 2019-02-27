@@ -5,9 +5,8 @@ comment: true
 permalink: /about/index.html
 ---
 
-Hi there! I'm gnailuy (pronounced reversedly as [ɥy2 ljaŋ4]), a software developer.
-Currently, I am working in a small startup team as a back-end and data programmer.
-Before August 2017, I was a senior software engineer of the data platform at [umeng.com][umeng].
+Hi there! I'm gnailuy (pronounced reversedly as [ɥy2 ljaŋ4]), a software developer at Microsoft Azure Big Data team.
+From April 2013 to August 2017, I was a senior software engineer of the data platform at [umeng.com][umeng]. After that, I joined a small startup team as a back-end and data programmer.
 I graduated from the College of Computer Science & Technology at the
 [Harbin Engineering University][heu] in March 2013, and have a master's degree in CS.
 
@@ -21,9 +20,10 @@ Basic Info:
 
 Few facts about me:
 
-* Worked on the Data Platform at Umeng for 4+ years, with Hadoop/HBase/Spark in life
+* A big data developer of the Azure platform at Microsoft
+* Worked on the data platform at Umeng for 4+ years, with Hadoop/HBase/Spark in life
 * Java/Scala and Python programmer, also code in Go/C/JS, etc., and have a girlfriend
-* Linuxer, one of the many lovers of Archlinux, and I fan Docker
+* Linuxer, one of the many lovers of Archlinux
 * Chinese native speaker, speak English, e sto imparando l'italiano
 
 [umeng]:    http://www.umeng.com
