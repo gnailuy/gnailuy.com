@@ -6,7 +6,8 @@ permalink: /about/index.html
 ---
 
 Hi there! I'm gnailuy (pronounced reversedly as [ɥy2 ljaŋ4]), a software developer at Microsoft Azure Big Data team.
-From April 2013 to August 2017, I was a senior software engineer of the data platform at [umeng.com][umeng]. After that, I joined a small startup team as a back-end and data programmer.
+From April 2013 to August 2017, I was a senior software engineer of the data platform at [umeng.com][umeng].
+After that, I joined a small startup team as a back-end and data programmer.
 I graduated from the College of Computer Science & Technology at the
 [Harbin Engineering University][heu] in March 2013, and have a master's degree in CS.
 
