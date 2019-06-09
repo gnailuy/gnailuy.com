@@ -5,9 +5,8 @@ date: 2019-05-05 00:14:54 +0800
 categories: [ linux ]
 ---
 
-网站好像挂了几天都没有发现，今天才看到，刚刚给恢复了。
-我的网站运行在几个 Docker 容器里，刚才查了一下[文档][document]，发现 Docker 是支持四种重启策略的：
-`no`, `on-failure`, `always` 和 `unless-stopped`。
+网站好像挂了几天都没有发现，今天才看到，刚刚给恢复了。我的网站运行在几个 [Docker 容器][containers]里，
+刚才查了一下[文档][document]，发现 Docker 是支持四种重启策略的：`no`, `on-failure`, `always` 和 `unless-stopped`。
 
 <!-- more -->
 
@@ -39,6 +38,7 @@ docker update --restart <policy-name> container1 container2 ...
 解决的办法也很简单，VsVim 的配置项里有读取配置文件的选项，可以选择读取 vsvimrc 和 vimrc 中任意一项，
 或者两者都读取，或者干脆不读取任何配置文件。把 vimrc 从 VsVim 的配置文件中去掉就好了。
 
+[containers]:  https://github.com/gnailuy/githook/blob/master/README.md
 [document]:    https://docs.docker.com/config/containers/start-containers-automatically/
 [spf13]:       https://github.com/gnailuy/spf13-vim-local
 
