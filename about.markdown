@@ -23,7 +23,7 @@ Few facts about me:
 
 * A software developer in the Azure Beijing Big Data Team at Microsoft
 * Worked on the data platform at Umeng for 4+ years, with Hadoop/HBase/Spark in life
-* Java/Scala and Python programmer, also code in C#/Go/JS, etc., and have a girlfriend
+* Code in many different programming languages, and have a girlfriend
 * Linuxer, one of the many lovers of Archlinux
 * Chinese native speaker, speak English, e sto imparando l'italiano
 
