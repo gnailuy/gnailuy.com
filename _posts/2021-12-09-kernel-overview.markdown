@@ -133,14 +133,25 @@ Modern Linux kernel are [modular kernel][lkm]. You can add new device drivers, f
 
 References: [1][reference1], [2][reference2], [3][reference3].
 
-### Install build tools and clone the kernel source code
+### Install tools and libraries
 
 ``` bash
-sudo apt install bison build-essential ccache fakeroot flex gdb git \
-    kernel-package libelf-dev libncurses5-dev libssl-dev qemu qemu-system
+# Build essentials and libraries
+sudo apt install bison build-essential ccache fakeroot flex \
+    kernel-package libelf-dev libncurses5-dev libssl-dev
+
+# Development tools
+sudo apt install git gdb
+
+# QEMU emulator
+sudo apt install qemu qemu-system
+```
+
+### Clone the kernel source code
+
+``` bash
 cd repository/
 git clone git://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
-cd linux-next/
 ```
 
 ### Configure the kernel build options
@@ -148,6 +159,7 @@ cd linux-next/
 Use the default configuration for `x86_64` architecture.
 
 ``` bash
+cd linux-next/
 make ARCH=x86_64 x86_64_defconfig
 ```
 
@@ -194,8 +206,8 @@ We need to build a root file system to boot the kernel.
 
 ``` bash
 git clone git://git.buildroot.net/buildroot
-cd buildroot
 
+cd buildroot
 make menuconfig
 ```
 
@@ -223,10 +235,12 @@ The file system image is saved in `output/images/rootfs.ext2`.
 
 ``` bash
 qemu-system-x86_64 -kernel arch/x86/boot/bzImage -boot c -m 2049M \
-    -hda ../buildroot/output/images/rootfs.ext4 \
+    -hda ../buildroot/output/images/rootfs.ext2 \
     -append "root=/dev/sda rw console=ttyS0,115200 acpi=off nokaslr" \
     -serial stdio -display none
 ```
+
+The system will boot with the kernel in the `bzImage` file and the root filesystem `rootfs.ext2`.
 
 Use the `-s` option to allow gdb to connect to the QEMU instance (through TCP port 1234).
 Use the `-S` option to stop the execution until you `continue` from the gdb.
@@ -236,6 +250,8 @@ Optionally, you can enable KVM with QEMU to improve the performance (`--enable-k
 
 ### Example: kernel debugging
 
+Start the kernel with QEMU:
+
 ``` bash
 qemu-system-x86_64 -s -kernel arch/x86/boot/bzImage -boot c -m 2049M \
     -hda ../buildroot/output/images/rootfs.ext2 \
@@ -243,7 +259,14 @@ qemu-system-x86_64 -s -kernel arch/x86/boot/bzImage -boot c -m 2049M \
     -serial stdio -display none
 ```
 
-From another shell instance:
+Configure your GDB to allow the startup script to run.
+For simplicity, I just add the below command to my `~/.gdbinit` file.
+
+``` text
+set auto-load safe-path /
+```
+
+Them from another shell instance, run the `gdb` command:
 
 ``` bash
 gdb ./vmlinux
@@ -251,7 +274,7 @@ gdb ./vmlinux
 (gdb) target remote :1234
 ```
 
-Then you can use the gdb commands to set break points and debug the kernel.
+Then you can use [GDB][gdb] ([Tutorial 1][gdb1], [Tutorial 2][gdb2], [Tutorial 3][gdb3], [TUI][tui]) to set break points and debug the kernel.
 
 
 [kernel-archives]:          https://www.kernel.org/
@@ -264,3 +287,8 @@ Then you can use the gdb commands to set break points and debug the kernel.
 [reference2]:               http://nickdesaulniers.github.io/blog/2018/10/24/booting-a-custom-linux-kernel-in-qemu-and-debugging-it-with-gdb/
 [reference3]:               https://theiotlearninginitiative.gitbook.io/coba/linux-kernel-development-environment
 [buildroot]:                https://buildroot.org/
+[gdb]:                      https://www.sourceware.org/gdb/
+[gdb1]:                     https://sourceware.org/gdb/current/onlinedocs/gdb/
+[gdb2]:                     https://www.cs.cmu.edu/~gilpin/tutorial/
+[gdb3]:                     https://developers.redhat.com/blog/2021/04/30/the-gdb-developers-gnu-debugger-tutorial-part-1-getting-started-with-the-debugger
+[tui]:                      https://sourceware.org/gdb/onlinedocs/gdb/TUI-Keys.html#TUI-Keys
