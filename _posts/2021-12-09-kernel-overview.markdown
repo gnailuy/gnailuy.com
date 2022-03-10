@@ -276,6 +276,13 @@ gdb ./vmlinux
 
 Then you can use [GDB][gdb] ([Tutorial 1][gdb1], [Tutorial 2][gdb2], [Tutorial 3][gdb3], [TUI][tui]) to set break points and debug the kernel.
 
+### Tip: find a symbol in the kernel source
+
+``` bash
+make tags
+vim -t sys_fork
+```
+
 
 [kernel-archives]:          https://www.kernel.org/
 [system-calls]:             https://man7.org/linux/man-pages/man2/syscalls.2.html
