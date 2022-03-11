@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Process management and scheduling"
+title: "Process management: Overview"
 date: 2022-01-21 20:42:06 +0800
 categories: [ linux ]
 ---
@@ -46,7 +46,7 @@ The kernel schedules the processes and decides which processes to run, at what t
 
 A process is created by its parent process by calling the `fork()` system call, which internally called the `clone()` system call.
 
-The `clone()` system call duplicates a task data structure, assign it a new PID,
+The `clone()` system call duplicates a task data structure (CoW), assign it a new PID,
 and copies necessary resources such as open files and signal handlers depending on the flags passed to it.
 (Interestingly, a thread in Linux is implemented as a process that `clone()`s more shared data than regular process do.)
 
@@ -79,8 +79,36 @@ The kernel maintains a circular doubly linked list of all process descriptors.
 In the above code sample in [`linux-next`][linux-next],
 the `struct task_struct` structure is defined in the `include/linux/sched.h` header file.
 
+### Process descriptor content
+
 The process descriptor contains all the information that the kernel needs about a process,
-including open files, signals, mutexes, processor state, memory address spaces, and the process ID (Line 950 in commit `cc570eff96`).
+including the process properties, scheduling information, the program counter,
+saved register data, memory space, file system information, etc..
+
+Some examples in `struct task_struct` are:
+
+* Process properties
+    * pid: Unique process ID (Line 950 in commit `cc570eff96`).
+    * state, exit_state, etc.: Used to track the process state, such as running, pending, existing, etc..
+    * flags, exit_code, comm, uid, gid, etcd..
+* Scheduling properties
+    * prio, static_prio, normal_prio, rt_priority, etc.: Process priority properties.
+    * policy: Process scheduling policy.
+    * sched_class: The scheduling class of the process.
+    * se, rt, dl, etc.: Scheduling class instance.
+* Process links
+    * real_parent, parent: If the process is not traced, the parent is the real parent.
+    * children: A list of all the children of the process.
+    * sibling: A pointer to the next sibling of the process.
+    * group_leader: A pointer to the leader of the process group.
+* Memory and file system
+    * mm: A pointer to the `mm_struct` member.
+    * fs: File system pointer.
+    * files: File descriptor table.
+
+The `task_struct` is initialized in the `init_task` structure in `./init/init_task.c`.
+
+### Process descriptor lookup
 
 It is important for the kernel to quickly look up the process descriptor of the currently executing process.
 On different architectures, the kernel uses different methods to do this, and it is abstracted by the `current` macro. (`./include/asm-generic/current.h`)
@@ -97,7 +125,7 @@ You can use `for_each_process` to iterate through all processes (`./include/linu
 
 There is also a `parent` pointer in the process descriptor, which points to the parent process descriptor,
 Every process has exactly one parent, and zero or more children.
-Thus all the processes in the system are linked in a tree structure, with the `init` process as the root process.
+Thus all the processes in the system are linked in a tree structure, with the `init` process (pid 1) as the root process.
 
 ### Process state
 
@@ -139,15 +167,15 @@ and the scheduler then decides which process to run next, and how long its time 
 
 ### What to consider when scheduling
 
-1. Speed
-
 The processor scheduler runs every time the system needs to decide which process to run.
 Each time it runs, the input is a given set of runnable processes, and the output is the process to run next.
+
+* Speed
 
 Since Linux kernel 2.5, a new scheduler named `O(1)` scheduler is introduced.
 It can perform its work in constant time, which is a big improvement over the previous scheduler.
 
-2. Latency and throughput
+* Latency and throughput
 
 The `O(1)` scheduler has some issues when it comes to latency-sensitive tasks.
 It is ideal for large server workloads, which lack of interactive processes, but performed poorly on desktop systems.
@@ -157,6 +185,25 @@ Most desktop GUI applications are I/O-bound, because they spend most of their ti
 Conversely, CPU-bound processes tend to spend much of their time executing code, until they are preempted by the kernel scheduler.
 
 Since Linux kernel 2.6.23, the Completely Fair Scheduler (CFS) replaces the `O(1)` scheduler to improve the interactive performance.
+
+#### Process priority
+
+There are four properties in `struct task_struct` that determine the priority of a process.
+
+``` c
+int       prio;
+int       static_prio;
+int       normal_prio;
+unsigned int      rt_priority;
+```
+
+* `static_prio` is calculated from the `nice` value of the process (by a macro `NICE_TO_PRIO`). It does not change unless the user changes the `nice` value.
+* `normal_prio` is calculated from the `static_prio` value and the schedule policy. For real-time processes, it is related to the `rt_priority` value.
+* `prio` is a dynamic priority value which the schedule class actually uses.
+
+#### Scheduling policy and algorithm
+
+In next post.
 
 
 [kernel-archives]:          https://www.kernel.org/
