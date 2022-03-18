@@ -19,7 +19,7 @@ Gnome 代理设置之后，大多数的桌面应用，包括 Chrome，都会继�
 要使用 Clash，设置 HTTP 和 SOCK 代理即可。
 
 <center>
-{% image fullWidth gnome_settings.png alt="Gnome Proxy Settings" %}
+{% image halfWidth gnome_settings.png alt="Gnome Proxy Settings" %}
 </center>
 
 不过每次去 GUI 里面修改设置比较麻烦，可以用 `gsettings` 命令行来搞定。
