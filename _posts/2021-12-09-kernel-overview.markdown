@@ -127,7 +127,7 @@ Modern Linux kernel are [modular kernel][lkm]. You can add new device drivers, f
 5. The kernel mounts the root file system (`initrd.img`).
 6. The kernel starts the `init` process (process ID 1). From this point the user space starts.
 7. `init` starts other processes (`fork()` and `exec()`). User space processes are usually managed by a service management service, such as `systemd`.
-8. `init` starts a log in process to allow the user to log in.
+8. `init` starts a login process to allow the user to login.
 
 ## Kernel development environment
 
