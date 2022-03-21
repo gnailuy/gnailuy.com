@@ -137,7 +137,7 @@ References: [1][reference1], [2][reference2], [3][reference3].
 
 ``` bash
 # Build essentials and libraries
-sudo apt install bison build-essential ccache fakeroot flex \
+sudo apt install bison build-essential ccache ctags fakeroot flex \
     kernel-package libelf-dev libncurses5-dev libssl-dev
 
 # Development tools
