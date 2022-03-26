@@ -88,7 +88,8 @@ saved register data, memory space, file system information, etc..
 Some examples in `struct task_struct` are:
 
 * Process properties
-    * pid: Unique process ID (Line 950 in commit `ea922272cbe5`).
+    * pid: Unique process (thread) ID (Line 946 in commit `09688c0166e7`).
+    * tgid: Unique process ID of the process group (process) (Line 947 in commit `09688c0166e7`).
     * state, exit_state, etc.: Used to track the process state, such as running, pending, existing, etc..
     * flags, exit_code, comm, uid, gid, etcd..
 * Scheduling properties
@@ -107,6 +108,11 @@ Some examples in `struct task_struct` are:
     * files: File descriptor table.
 
 The `task_struct` is initialized in the `init_task` structure in `./init/init_task.c`.
+
+Note that the `pid` in the kernel source actually means the thread ID from the user space application's view (such as `ps`).
+And the process ID (PID) returned by `ps` is actually the `tgid` in the kernel source.
+There is a little confuse in these terms.
+In [this blog post][pidtidppidtgid] there is a nice explanation of the difference. See the `PID, TID, PPID, and TGID` section.
 
 ### Process descriptor lookup
 
@@ -159,3 +165,4 @@ Question: What if the parent process need to exit before the child process exits
 [kernel-archives]:          https://www.kernel.org/
 [gustavo2009]:              https://manybutfinite.com/post/anatomy-of-a-program-in-memory/
 [linux-next]:               https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+[pidtidppidtgid]:           https://helix979.github.io/jkoo/post/os-scheduler/
