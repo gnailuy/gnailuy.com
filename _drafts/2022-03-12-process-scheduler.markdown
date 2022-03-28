@@ -11,13 +11,19 @@ Process scheduling in [the Linux kernel][kernel-archives].
 
 ## Process scheduling
 
-There are usually many processes that are in `TASK_RUNNING` state, which means they are ready to run.
+In modern systems, there are usually many processes that are in `TASK_RUNNING` state, which means they are ready to run.
 It is the kernel's job to decide which process to run, and how long to run it.
-This is done by the kernel scheduler, a kernel subsystem that is responsible for scheduling the processes.
+This is done by the kernel scheduler, a [kernel subsystem][linux-kernel-map] that is responsible for scheduling the processes.
 
 Most modern operating systems, including Linux, employs preemptive multitasking.
 In this model, each process is assigned a slice of CPU time to run, then it will be preempted by the kernel scheduler,
 and the scheduler then decides which process to run next, and how long its time slice will be.
+A process can also relinquishes its CPU slice, for example when a process need to wait for a resource to become available.
+The scheduler also needs to select the next process if this happens.
+
+When a processor changes to a new process, the scheduler is responsible for saving the state of the previous process,
+including the registers (including the program counter) and the memory address space.
+This is often referred to as the `context` of a process, thus switching from one process to another is called `context switch`.
 
 ### What to consider when scheduling
 
@@ -61,3 +67,4 @@ In next post.
 
 
 [kernel-archives]:          https://www.kernel.org/
+[linux-kernel-map]:         http://www.makelinux.net/kernel_map/LKM.pdf
