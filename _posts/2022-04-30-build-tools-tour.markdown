@@ -471,7 +471,9 @@ AC_PROG_CC
 AC_CONFIG_FILES([Makefile])
 
 AC_CHECK_LIB(m, main, [], [
-    echo "Error! The Math library is required. Please install it to build this project."
+    echo "Error! \
+        Math library is required. \
+        Please install it to build this project."
     exit -1
 ])
 
@@ -591,7 +593,8 @@ File: `hello.c`
 #include <version.h>
 
 int main(int argc, char* argv[]) {
-    printf("hello program version %d.%d.%d\n", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+    printf("hello program version %d.%d.%d\n",
+        VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
 
     return 0;
 }
@@ -701,7 +704,8 @@ File: `hello.c`
 #include <version.h>
 
 int main(int argc, char* argv[]) {
-    printf("hello program version %d.%d.%d\n", VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+    printf("hello program version %d.%d.%d\n",
+        VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
 
     say_hello("World");
 
