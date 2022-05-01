@@ -35,7 +35,7 @@ make install
 
 As you can see from the above commands, `Make` is actually part of the `Autotools`.
 
-`CMake` is another tool we will talk about in this tour.
+`CMake` is another cool build tool we will talk about in this tour.
 It uses a platform and compiler independent configuration file to generate build files on different systems.
 Mostly is it used to generate `Makefile`s, but it can also support other build systems such as
 Visual Studio, XCode, or [`Ninja`][ninja].
@@ -53,7 +53,7 @@ It also benefits the end users when you distribute your software by source code,
 they can easily build your software using simple `make` commands without knowing any compiler flag you use.
 
 Another thing make does is that it calculates which files are already up-to-date,
-so that it only recompile the files you modified or the files depends on modified objects.
+so that it only recompile the files you modified or the files depends on the modified objects.
 You do not need to recompile the whole project when you only change a few source files.
 
 ### Make rule
@@ -94,7 +94,7 @@ hello: hello.c
 ```
 
 1. Run command `make` to build the executable `hello`.
-2. Run another time `make`, it will skip the build as `hello` is already update-to-date.
+2. Run `make` again, it will skip the build as `hello` is already update-to-date.
 3. Make some modification to `hello.c`, and `make` again.
 
 #### Add a function file
@@ -146,8 +146,8 @@ clean:
 #### Implicit rule
 
 The second rule generates `hello_func.o` from `hello_func.c`.
-This is so common that make provides automatic rules for it, and these are called implicit rules.
-We can delete this rule in our makefile to let make do the job automatically.
+This is so common that `make` provides automatic rules for it, which are called implicit rules.
+We can delete the second rule in our makefile to let make do the job automatically.
 
 ``` make
 hello: hello.c hello_func.o
@@ -166,8 +166,8 @@ gcc -o hello hello.c hello_func.o -I.
 ```
 
 We can see that the implicit rule uses `cc` to compile `hello_func.c` to `hello_func.o`.
-In many systems such as my Ubuntu desktop, `cc` is linked to `gcc`, so no problem we are using the same compiler.
-But to avoid unintended issues, we can use make's variable ability to specify a compiler.
+In many systems such as my Ubuntu desktop, `cc` is linked to `gcc`. So no problem, we are using the same compiler.
+But to avoid potential issues, we can use make's variable ability to specify a compiler.
 
 #### Use variables
 
@@ -235,23 +235,21 @@ clean:
 	-rm -f hello $(OBJS)
 ```
 
-1. `pathsubst` is a build-in text function that substitutes `%` to `$(DIR_OBJECT)/%`, in which `%` is an item in the of `$(_OBJS)` split by space.
+1. `pathsubst` is a build-in text function that substitutes all `%` to `$(DIR_OBJECT)/%`, in which `%` is the object file in the list of `$(_OBJS)` split by space.
 2. When a rule contains more than one targets, it runs the command set once for each target.
 3. `$@` is a build-in variable which means the target name, so in each run it echos the current target name.
 4. `$^` means all the dependencies, while `$<` means the first item in the dependencies.
 
-Reference to other build-in text functions: https://www.gnu.org/software/make/manual/html_node/Text-Functions.html
-
-Reference to other automatic variables: https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
-
 #### Practice
 
 1. We've been ignoring the `hello_func.h` file in the dependencies list. Add it to the `Makefile`.
-2. Add a library file to the `lib` folder.
+2. Add a static library file to the `lib` folder.
 3. Use `-lm` to build a function that uses the `math` library.
 
 #### More about make
 
+* Reference to other build-in text functions: [Link][textfunctions].
+* Reference to other automatic variables: [Link][automaticvariables].
 * Reference: [Makefile Tutorial][makefiletutorial].
 * Reference: [GNU make][makedoc].
 
@@ -259,7 +257,7 @@ Reference to other automatic variables: https://www.gnu.org/software/make/manual
 
 ### What does `Autotools` do
 
-`Autotools` is part of the [GNU toolchain][toochain].
+`Autotools` is part of the [GNU toolchain][toolchain].
 It is a build system that helps in "making source code package portable to many Unix-like systems".
 It is mostly used to standardize the build procedure for C/C++ project, but is not limited to C/C++.
 
@@ -272,7 +270,7 @@ and eventually generate a `Makefile` to build the project.
 
 #### Project structure
 
-Let's have the below project structure, in which the `hello_func` module is organized in its own folder.
+Let's have the below project structure, in which the `hello_func` is a module that has its own folder.
 
 ``` text
 .
@@ -319,7 +317,7 @@ gcc -o hello src/hello.c hello_func/hello_func.c -I.
 
 Let's use `Autoconf` to build the above project.
 
-#### `configure.ac`
+#### The `configure.ac` file
 
 First, we need a `configure.ac` file, which is used to create the `configure` script.
 `configure.ac` uses a language called [`M4sh`][m4sh],
@@ -335,8 +333,8 @@ AC_INIT([hello], [0.0.1], [hello@example.com])
 AM_INIT_AUTOMAKE([foreign subdir-objects -Wall -Werror])
 
 AC_PROG_CC
-AC_CONFIG_FILES([Makefile])
 
+AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 ```
 
@@ -356,7 +354,7 @@ We use `AC_PROG_CC` because we are creating a C project, and this macro will hel
 The `AC_CONFIG_FILES` macro makes `AC_OUTPUT` to create `Makefile` from `Makefile.in`.
 Thus in our configuration, the `configure` script we generate will create one `Makefile` in the root directory.
 
-#### `Makefile.am`
+#### The `Makefile.am` file
 
 We will need another file to help generate the final `Makefile`, which is `Makefile.am`.
 
@@ -488,7 +486,7 @@ and quit the `configure` script with error.
 #### Practice 
 
 1. Add `Libtool` to your project. Use `lib_LTLIBRARIES=mylib.la` and `mylib_la_SOURCES=mylib.c` to add a static library.
-2. Use the [`GNU GSL`][gsl] library to your project. Check its existence in the `configure.ac` script, and link it in your `Makefile.am`.
+2. Use the [`GNU GSL`][gsl] library in your project. Check its existence in the `configure.ac` script, and link it in your `Makefile.am`.
 
 ### More about autotools
 
@@ -501,9 +499,9 @@ and quit the `configure` script with error.
 ### Overview
 
 `CMake` is another popular build tool for C/C++ projects.
-Like the `Autotools` it can generate `Makefile`s for your project on different environments.
-But it can also generate other workspaces such as Visual Studio projects, XCode projects,
-and is a powerful, popular cross-platform build tool.
+Like the `Autotools`, it can generate `Makefile`s for your project on different environments.
+But it can also generate other workspaces such as Visual Studio projects, XCode projects.
+It is a powerful, popular cross-platform build tool.
 
 ### Tour
 
@@ -665,7 +663,8 @@ target_include_directories(hello_func INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 ```
 
 This will build `hello_func.c` into a static library.
-The second command uses the `INTERFACE` usage requirement to let anybody linking to us to include our source directory.
+The second command uses the `INTERFACE` [usage requirement][usagerequirement]
+to let anybody linking to the library to include its source directory.
 
 To use our library, we need to add it to the main `CMakeLists.txt`:
 
@@ -781,6 +780,8 @@ cmake --install . --prefix /some/test/path/
 [cargo]:                        https://www.rust-lang.org/tools
 [bazel]:                        https://bazel.build/
 [ninja]:                        https://ninja-build.org/
+[textfunctions]:                https://www.gnu.org/software/make/manual/html_node/Text-Functions.html
+[automaticvariables]:           https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
 [makefiletutorial]:             https://makefiletutorial.com/
 [makedoc]:                      https://www.gnu.org/software/make/manual/html_node/index.html
 [toolchain]:                    https://en.wikipedia.org/wiki/GNU_toolchain
@@ -795,6 +796,7 @@ cmake --install . --prefix /some/test/path/
 [autotoolstutorial]:            https://www.lrde.epita.fr/~adl/autotools.html
 [mythbuster]:                   https://autotools.info/index.html
 [projectversion]:               https://cmake.org/cmake/help/latest/variable/PROJECT-NAME_VERSION.html
+[usagerequirement]:             https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#include-directories-and-usage-requirements
 [cmakeoption]:                  https://cmake.org/cmake/help/latest/command/option.html
 [cmakedoc]:                     https://cmake.org/cmake/help/latest/index.html
 [conan]:                        https://docs.conan.io/en/latest/getting_started.html
