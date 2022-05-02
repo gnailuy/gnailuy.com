@@ -276,6 +276,69 @@ gdb ./vmlinux
 
 Then you can use [GDB][gdb] ([Tutorial 1][gdb1], [Tutorial 2][gdb2], [Tutorial 3][gdb3], [TUI][tui]) to set break points and debug the kernel.
 
+### Example: debug kernel with VS Code
+
+Install the [`C/C++` for Visual Studio Code][c-cpp-extension] extension on VS Code.
+
+If you are debugging from a remote VS Code, install the [`Remote - SSH`][remote-ssh] extension on VS Code.
+For example I can use `Remote - SSH` on my Mac to open the source code directory on my Ubuntu host,
+and debug a qemu instance on the Ubuntu host.
+
+Open VSCode and open the `linux-next` source code folder.
+If you are debugging remotely, use the VS Code command `Remote-SSH: Connect to Host...` to connect to the remote host first,
+then open the `linux-next` folder on the remote host.
+
+Use the menu item `Run -> Add Configuration ...`,
+or just manually create an empty `launch.json` file in the `.vscode` folder under your source code root.
+Use the below content in your `launch.json`:
+
+``` json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Debug Kernel",
+            "type": "cppdbg",
+            "request": "launch",
+            "miDebuggerServerAddress": "127.0.0.1:1234",
+            "program": "${workspaceFolder}/vmlinux",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "logging": {
+                "engineLogging": false
+            },
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}
+```
+
+Then start the kernel you just built in QEMU.
+Remember to use the `-s` option to open the debugger port 1234.
+
+From VS Code, press `F5` to start debugging the kernel.
+Try add a breakpoint in the `__schedule()` function in file `kernel/sched/core.c`,
+the kernel will stop at the breakpoint upon the next scheduling.
+
+<center>
+{% image fullWidth debugging_kernel.png alt="Debugging the Linux kernel in VS Code" %}
+</center>
+
 ### Tip: find a symbol in the kernel source
 
 ``` bash
@@ -299,3 +362,5 @@ vim -t sys_fork
 [gdb2]:                     https://www.cs.cmu.edu/~gilpin/tutorial/
 [gdb3]:                     https://developers.redhat.com/blog/2021/04/30/the-gdb-developers-gnu-debugger-tutorial-part-1-getting-started-with-the-debugger
 [tui]:                      https://sourceware.org/gdb/onlinedocs/gdb/TUI-Keys.html#TUI-Keys
+[c-cpp-extension]:          https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools
+[remote-ssh]:               https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh
