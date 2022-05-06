@@ -485,10 +485,11 @@ The third and forth parameter of `AC_CHECK_LIB` defines the action if the check 
 Thus we use the forth parameter to give user a hint if the library does not exist,
 and quit the `configure` script with error.
 
-#### Practice 
+#### Practice
 
-1. Add `Libtool` to your project. Use `lib_LTLIBRARIES=mylib.la` and `mylib_la_SOURCES=mylib.c` to add a static library.
-2. Use the [`GNU GSL`][gsl] library in your project. Check its existence in the `configure.ac` script, and link it in your `Makefile.am`.
+1. We also ignored the `hello_func.h` file in the final tarball, try add it to the project.
+2. Add `Libtool` to your project. Use `lib_LTLIBRARIES=mylib.la` and `mylib_la_SOURCES=mylib.c` to add a static library.
+3. Use the [`GNU GSL`][gsl] library in your project. Check its existence in the `configure.ac` script, and link it in your `Makefile.am`.
 
 ### More about autotools
 
