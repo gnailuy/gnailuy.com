@@ -13,7 +13,7 @@ categories: [ dataplatform ]
 
 <!-- more -->
 
-#### Lambda Architecture
+## Lambda Architecture
 
 在友盟，整个移动大数据平台架构基本符合 [Nathan Marz][marz] 和 [James Warren][warren]
 在 [Big Data][bigdatabook] 一书中介绍的 [Lambda Architecture][lambda-arch]。
@@ -44,7 +44,7 @@ Speed Layer 则由我们的另一个团队完成，负责实时数据的计算�
 本文后面主要从数据平台目前 MapReduce 任务的组织部署的优缺点展开，
 简单聊一聊 MapReduce 计算模型的限制，和我们对另一个计算模型/框架 Spark 的使用。
 
-#### MapReduce
+## MapReduce
 
 MapReduce 计算模型简单粗暴有效。这个计算模型适用于这种场景：
 
@@ -96,7 +96,7 @@ IO 开销比较大，这也是为什么 MapReduce 任务设计中，有效的利
 因此，在一些适用的场景下，我们目前也在使用 Spark 进行数据分析，
 一部分是新业务，一部分则是替代 MapReduce 并不十分适合的旧任务。
 
-#### Spark
+## Spark
 
 Spark 当前风头正劲。
 这个计算框架的特性包括：快速的数据处理，简明有效的数据模型和计算模型，

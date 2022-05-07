@@ -9,7 +9,7 @@ An introductory tour to the [`GNU Make`][make], [`GNU Autotools`][autotools], [`
 
 <!-- more -->
 
-# Build tools
+## Build tools
 
 Build tools are around to help organize and optimize the build process for our projects.
 

@@ -20,7 +20,7 @@ MapReduce 不擅长或者不能处理的问题需要新的系统来解决，而 
 这篇文章里我们就从我们团队日常开发的实际经验出发，
 聊一聊 Hadoop 中 MapReduce 任务设计时经常使用到的几个小技术。
 
-### Multiple Inputs
+## Multiple Inputs
 
 多路输入常用于下面两种情况：
 
@@ -67,7 +67,7 @@ Path inputPath = ((FileSplit) context.getInputSplit()).getPath();
 对于每一个 Input Split，Mapper 的 *run()* 方法都会先调用 *setup()*，
 然后对这个 Split 中的每一个 Record 执行 *map()* 方法，最后 *cleanup()*。
 
-#### Multiple Outputs
+## Multiple Outputs
 
 在我们这边的日常开发中，多路输出的使用比多路输入更常见一点。
 有时是需要从一个任务中输出多路数据供后续的多个流程进行处理，
@@ -112,7 +112,7 @@ mos.close();
 进行输出，那么任务的输出目录中还是会生成一堆空的 *part-r-xxxxx* 文件。
 如果要避免生成这些空文件，可以使用 LazyOutputFormat。
 
-#### Composite Key & Secondary Sort
+## Composite Key & Secondary Sort
 
 MapReduce 计算模型中，Shuffle 和 Sort 部分可以自定义的地方相对较少，
 框架提供的功能大部分情况下能够满足需要。
@@ -163,7 +163,7 @@ Mapper 输出的 VALUE 则包含输入数据中的 *Value* 以及 *Key2* 两个�
 定义 Partitioner 和 Grouping Comparator 只对比 *Key1*，
 Sort Comparator 则对比 *Key1 + Key2* 就可以了。
 
-#### Partitioner
+## Partitioner
 
 上面讨论 Secondary Sort 时，已经提到过 Partitioner 的原理和用法。
 通常情况下，默认的 Partitioner 按照 KEY 的 *hashCode()* 进行分区，
@@ -192,7 +192,7 @@ public int getPartition(KEY key, VALUE val, int numReduceTasks) {
 使得每个 Reducer 中都按照 Rowkey 自然顺序访问 HBase，提高了 HBase BlockCache
 的命中率，使得程序运行时间缩短为优化前的三分之一。
 
-#### Distributed Cache
+## Distributed Cache
 
 Distributed Cache 在 MapReduce 任务中应用很广，
 它可以大大提高一些被频繁读取文件的访问速度。
@@ -212,7 +212,7 @@ DistributedCache.addCacheArchive(new URI("/path/to/archive.tgz",
 因此可以通过简单的本地读写 API 访问它们，访问速度通常也比从 HDFS 读写快很多，
 非常适合保存经常被读取的小文件。
 
-#### 结语
+## 结语
 
 MapReduce 适用于对大批量、不能全部加载到内存的数据进行批处理，
 使用好 Hadoop 框架提供的特性，可以更加高效、优雅的解决问题。
@@ -222,7 +222,7 @@ MapReduce 适用于对大批量、不能全部加载到内存的数据进行批�
 这本书用 200 多页的篇幅，介绍了常见的一些 MapReduce 算法设计模式，
 是一本不错的设计指南。
 
-#### TheFortyTwo
+## TheFortyTwo
 
 我们数据平台的程序员们做了一个微信公众号，叫做 **TheFortyTwo**，
 我们会在工作之余，<del>每周</del>为大家推送原创技术文章，
