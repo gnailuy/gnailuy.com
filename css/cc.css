@@ -1,0 +1,9 @@
+.cc-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.cc-image {
+  border-width: 0;
+  float: right;
+}

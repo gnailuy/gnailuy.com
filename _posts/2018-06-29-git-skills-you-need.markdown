@@ -208,4 +208,3 @@ git stash list
 看到的内容实质上是一样的。
 
 另外，你可以打开文件 `.git/logs/refs/stash` 来看一下，这里面就保存了我们所有的 Stash。
-

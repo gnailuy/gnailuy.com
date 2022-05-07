@@ -63,4 +63,3 @@ parity account import --import-geth-keys ~/Library/Ethereum/keystore/UTC--XXX
 [homestead]:    http://www.ethdocs.org/en/latest/introduction/the-homestead-release.html
 [PCG]:          https://paritytech.github.io/parity-config-generator/
 [issue]:        https://github.com/paritytech/parity/issues/6367
-

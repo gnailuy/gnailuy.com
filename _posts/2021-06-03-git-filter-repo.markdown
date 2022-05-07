@@ -63,4 +63,3 @@ although `old_subproject_folder` no longer exists in the current project tree.
 [filter-branch]:        https://git-scm.com/docs/git-filter-branch
 [filter-repo]:          https://github.com/newren/git-filter-repo/
 [filter-repo-script]:   https://github.com/newren/git-filter-repo/blob/main/git-filter-repo
-

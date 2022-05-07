@@ -184,4 +184,3 @@ parity
 [blockchain]:   https://blockchain.info/
 [demo]:         https://www.ethereum.org/token
 [parity]:       https://www.parity.io/
-

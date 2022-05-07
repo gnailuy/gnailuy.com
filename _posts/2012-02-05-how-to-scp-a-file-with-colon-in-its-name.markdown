@@ -30,4 +30,3 @@ The solution to this problem turns out to be very simple:
 scp ./file\:name yuliang@gnailuy.com:
 scp /path/to/file\:name yuliang@gnailuy.com:
 ```
-

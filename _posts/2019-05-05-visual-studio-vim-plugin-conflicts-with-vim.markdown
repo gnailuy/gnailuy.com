@@ -17,4 +17,3 @@ categories: [ linux ]
 或者两者都读取，或者干脆不读取任何配置文件。把 vimrc 从 VsVim 的配置文件中去掉就好了。
 
 [spf13]:       https://github.com/gnailuy/spf13-vim-local
-

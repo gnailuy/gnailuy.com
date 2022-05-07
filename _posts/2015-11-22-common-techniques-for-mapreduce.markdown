@@ -236,4 +236,3 @@ MapReduce 适用于对大批量、不能全部加载到内存的数据进行批�
 </center>
 
 [mrdp]:     http://shop.oreilly.com/product/0636920025122.do
-

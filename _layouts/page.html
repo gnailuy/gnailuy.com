@@ -1,13 +1,13 @@
 ---
 layout: default
 ---
+
 <h2>{{ page.title }}</h2>
 
-<div class="post">
-{{ content }}
-</div>
+<main class="post">
+  {{ content }}
+</main>
 
 {% if page.comment %}
   {% include comments.html %}
 {% endif %}
-

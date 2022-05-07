@@ -177,4 +177,3 @@ docker build --build-arg APT_MIRROR=$DOCKER_BUILD_APT_MIRROR -t organization/ima
 [go-plus]:      https://atom.io/packages/go-plus
 [intellij-go]:  http://go-ide.com/
 [baseimage]:    https://github.com/gnailuy/docker-gfw
-

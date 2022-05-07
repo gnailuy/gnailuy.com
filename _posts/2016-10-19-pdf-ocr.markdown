@@ -65,4 +65,3 @@ gs -dBATCH -dNOPAUSE -sDEVICE=pnggray -r300 -dUseCropBox \
 
 [tesseract]:    https://github.com/tesseract-ocr/tesseract
 [tessdata]:     https://github.com/tesseract-ocr/tessdata
-

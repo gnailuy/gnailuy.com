@@ -18,4 +18,3 @@ categories: [ internet ]
 
 [explanimator]:         https://www.youtube.com/channel/UCVQmx3DKwnAvsEvzmZNkZwQ
 [newscientistvideo]:    https://www.youtube.com/user/newscientistvideo
-

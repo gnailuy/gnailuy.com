@@ -30,4 +30,3 @@ git remote set-url --add --push origin https://bitbucket.org/user/project.git
 这个小技巧可以从 Git 文档的[这里][seturl]找到说明。
 
 [seturl]:    https://git-scm.com/docs/git-remote#git-remote-emset-urlem
-

@@ -84,4 +84,3 @@ docker run -it -v miktex:/miktex/.miktex -v `pwd`:/miktex/work miktex/miktex \
 [pandoc]:       https://pandoc.org/
 [miktex]:       https://miktex.org/
 [miktexDocker]: https://miktex.org/howto/miktex-docker
-

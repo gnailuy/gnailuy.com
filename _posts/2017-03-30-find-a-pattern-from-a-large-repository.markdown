@@ -21,4 +21,3 @@ find . \( -path ./.idea -o -path ./.git -o -path ./.github \) -prune -o \
 
 In this command, those `.idea`, `.git`, and `.github` are common hidden directories
 that we usually don't want to look in.
-

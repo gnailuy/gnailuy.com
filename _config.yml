@@ -2,11 +2,11 @@
 name: .-- .. - .... .-.. --- ...- .
 markdown: redcarpet
 redcarpet:
-    extensions: ["autolink", "no_intra_emphasis", "tables", "with_toc_data"]
+  extensions: ["autolink", "no_intra_emphasis", "tables", "with_toc_data"]
 highlighter: pygments
 permalink: pretty
 timezone: Asia/Shanghai
-encoding: utf-8
+encoding: UTF-8
 baseurl: /
 
 # Author Information
@@ -21,23 +21,22 @@ urlAbout: /about
 
 # Navigation Bar Items
 navItems:
-    - name: home
-      url: /
-    - name: archive
-      url: /archive
-    - name: about
-      url: /about
+  - name: home
+    url: /
+  - name: archive
+    url: /archive
+  - name: about
+    url: /about
 
 # Image Tag
 image:
-    source: assets/images/_fullsize
-    output: images
-    presets:
-        # Proportional preset
-        fullWidth:
-            width: 630
-        twoThirdsWidth:
-            width: 420
-        halfWidth:
-            width: 315
-
+  source: assets/images/_fullsize
+  output: images
+  presets:
+    # Proportional preset
+    fullWidth:
+      width: 630
+    twoThirdsWidth:
+      width: 420
+    halfWidth:
+      width: 315

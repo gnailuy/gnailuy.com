@@ -52,4 +52,3 @@ This file adds a hook at the end of the system initial process with a function w
 [archwiki]:         https://wiki.archlinux.org/index.php/MAC_Address_Spoofing
 [macchanger]:       http://www.alobbs.com/macchanger
 [ip]:               http://linux.die.net/man/8/ip
-

@@ -28,4 +28,3 @@ docker update --restart <policy-name> container1 container2 ...
 
 [containers]:  https://github.com/gnailuy/githook/blob/master/README.md
 [document]:    https://docs.docker.com/config/containers/start-containers-automatically/
-

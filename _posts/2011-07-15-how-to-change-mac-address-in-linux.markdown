@@ -65,4 +65,3 @@ Then restart the network subsystem:
 ``` bash
 /etc/init.d/networking restart
 ```
-

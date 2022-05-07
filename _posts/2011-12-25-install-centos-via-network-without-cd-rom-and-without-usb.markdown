@@ -51,4 +51,3 @@ Next, I chose a mirror site (a self-hosted mirror site will be faster) which hos
 （本文中文版[链接][chinese]）
 
 [chinese]:      /linux/2011/12/26/install-centos-via-network-without-cd-rom-and-without-usb-chs/
-
