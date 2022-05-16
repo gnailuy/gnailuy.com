@@ -1,0 +1,9 @@
+# Force text file to use LF line endings
+*   text=auto eol=lf
+
+# Denote all files that are truly binary and should not be modified.
+*.gif   binary
+*.ico   binary
+*.jpeg   binary
+*.jpg   binary
+*.png   binary
