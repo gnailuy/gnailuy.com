@@ -221,7 +221,7 @@ If the value is `-`, it means the process is not real-time.
 #### Nice value
 
 A `nice` value is a number from -20 to 19, where -20 is the highest priority and 19 is the lowest priority, and 0 is the default priority.
-Note that larger `nice` value means higher priority, as the process is being 'nice' to other processes.
+Note that larger `nice` value means lower priority, as the process is being 'nice' to other processes.
 
 You can see the `nice` value of a process by using the `ps` or `top` command and checking the `NI` column.
 There is also a `nice` command that can be used to set the `nice` value of a process.

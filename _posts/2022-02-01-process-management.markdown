@@ -91,7 +91,7 @@ Some examples in `struct task_struct` are:
     * pid: Unique process (thread) ID (Line 946 in commit `09688c0166e7`).
     * tgid: Unique process ID of the process group (process) (Line 947 in commit `09688c0166e7`).
     * state, exit_state, etc.: Used to track the process state, such as running, pending, existing, etc..
-    * flags, exit_code, comm, uid, gid, etcd..
+    * flags, exit_code, comm, uid, gid, etc..
 * Scheduling properties
     * prio, static_prio, normal_prio, rt_priority, etc.: Process priority properties.
     * policy: Process scheduling policy.
