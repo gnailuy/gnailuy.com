@@ -1,0 +1,8 @@
+---
+layout: page
+title: Server depressed
+permalink: /50x.html
+---
+
+I think you ought to know I'm feeling very depressed.
+
