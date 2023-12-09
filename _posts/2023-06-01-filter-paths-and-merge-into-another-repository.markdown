@@ -17,7 +17,7 @@ To state this more clear let's assume I need to move `subdir1` and `file1` of th
 
 ### Project A
 
-``` plain
+``` text
 /
   /subdir1
   /subdir2
@@ -27,7 +27,7 @@ To state this more clear let's assume I need to move `subdir1` and `file1` of th
 
 ### Project B
 
-``` plain
+``` text
 /
   /otherdirs
   /otherfiles
@@ -35,7 +35,7 @@ To state this more clear let's assume I need to move `subdir1` and `file1` of th
 
 The result I want in project B is:
 
-``` plain
+``` text
 /
   /project_a
     /subdir1
