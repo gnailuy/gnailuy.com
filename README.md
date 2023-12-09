@@ -37,7 +37,7 @@ sudo cp /etc/letsencrypt/live/gnailuy.com/* /home/yuliang/letsencrypt/live/gnail
 docker run -d --restart unless-stopped --name gnaiux --network githook -v /home/yuliang/gnailuy.com/_nginx/conf:/etc/nginx:ro -v /home/yuliang/letsencrypt:/etc/letsencrypt:ro -v /home/yuliang/webroot:/usr/share/nginx/html:ro -v /home/yuliang/logs:/var/log/nginx -p 80:80 -p 443:443 nginx
 ```
 
-Note that we use the same network with the [`githook`](https://github.com/gnailuy/githook) project so that nginx can find the webhook server `githook_server`.
+Note that I use the same network with the [`githook`](https://github.com/gnailuy/githook) on my host so that Nginx can find the webhook server with it's name `githook_server`.
 
 ## Let's Encrypt renewal hook
 
