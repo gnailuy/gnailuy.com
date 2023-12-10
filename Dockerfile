@@ -9,3 +9,4 @@ RUN apk add --no-cache ruby-dev build-base imagemagick python && \
 ENV TZ=Asia/Shanghai
 
 ENTRYPOINT ["jekyll"]
+

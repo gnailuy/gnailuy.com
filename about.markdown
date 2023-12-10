@@ -17,11 +17,11 @@ Basic Info:
 
 * Name / Gender - Yuliang Jin / Rational
 * Location - Beijing, China
-* Inbox - `echo c2hlbGRvbi55LmppbkBnbWFpbC5jb20K | base64 -d -` (or `base64 -D` on Mac)
+* Inbox - `echo eXVsaWFuZ0BnbmFpbHV5LmNvbQo= | base64 -d -` (or `base64 -D` on Mac)
 
 Few facts about me:
 
-* A full stack software developer in the Azure Beijing Big Data Team at Microsoft
+* A full stack software developer in the Azure Big Data Team at Microsoft
 * Worked on the data platform at Umeng for 4+ years, with Hadoop/HBase/Spark in life
 * Code in many different programming languages, and happily married
 * Linuxer, one of the many lovers of Archlinux
@@ -30,3 +30,4 @@ Few facts about me:
 [azure]:    https://azure.microsoft.com/en-us/
 [umeng]:    http://www.umeng.com
 [heu]:      http://english.hrbeu.edu.cn
+
