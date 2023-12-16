@@ -34,7 +34,8 @@ Follow the below steps to use Gmail's SMTP.
 4. Add my new email address and check the `Treat as an alias` option.
 5. In the next step, use the below information:
 
-| :--: | :--: |
+| Key | Value |
+|:---:|:-----:|
 | SMTP Server | smtp.gmail.com:587 |
 | Username | My Gmail address |
 | Password | The new App Password I just created |
