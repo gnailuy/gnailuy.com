@@ -111,9 +111,17 @@ Based on the above Zookeeper features, we can use the below [lock implementation
 
 The client only watches on the next lowest sequence number instead of all nodes to avoid the herd effect.
 
+## Use Azure blob
+
+[Azure Storage][blob-lock] support acquiring lease on blobs and we can use that as a distributed lock.
+
+In a recent project I tested the performance of using a SQL server and Azure blob lease as a distributed lock.
+Azure blob's performance is good and we chose to use it in our project.
+
 
 [redis-distributed-lock]:   https://redis.io/docs/manual/patterns/distributed-locks/
 [zookeeper]:                https://zookeeper.apache.org/doc/r3.1.2/zookeeperOver.html
 [zookeeper-watches]:        https://zookeeper.apache.org/doc/current/zookeeperProgrammers.html#ch_zkWatches
 [zookeeper-lock]:           https://zookeeper.apache.org/doc/r3.1.2/recipes.html#sc_recipes_Locks
+[blob-lock]:                https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-lease
 
