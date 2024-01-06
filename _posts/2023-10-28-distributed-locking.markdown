@@ -93,7 +93,7 @@ New nodes will have a suffix `X` which is a monotonic increasing number.
 We can use the `sequence` flag when creating the node to create sequence nodes.
 For example, `/lock/node-0000000000` and `/lock/node-0000000001`.
 
-A client can set [watches](https://zookeeper.apache.org/doc/current/zookeeperProgrammers.html#ch_zkWatches) on `znode`s.
+A client can set [watches][zookeeper-watches] on `znode`s.
 Changes to the `znode` trigger the watch and sends the client a notification.
 
 Based on the above Zookeeper features, we can use the below [lock implementation][zookeeper-lock].
@@ -114,5 +114,6 @@ The client only watches on the next lowest sequence number instead of all nodes 
 
 [redis-distributed-lock]:   https://redis.io/docs/manual/patterns/distributed-locks/
 [zookeeper]:                https://zookeeper.apache.org/doc/r3.1.2/zookeeperOver.html
+[zookeeper-watches]:        https://zookeeper.apache.org/doc/current/zookeeperProgrammers.html#ch_zkWatches
 [zookeeper-lock]:           https://zookeeper.apache.org/doc/r3.1.2/recipes.html#sc_recipes_Locks
 
