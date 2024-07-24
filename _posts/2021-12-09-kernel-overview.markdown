@@ -234,8 +234,8 @@ The file system image is saved in `output/images/rootfs.ext2`.
 ### Start the kernel with the root file system in QEMU
 
 ``` bash
-qemu-system-x86_64 -kernel arch/x86/boot/bzImage -boot c -m 2049M \
-    -hda ../buildroot/output/images/rootfs.ext2 \
+qemu-system-x86_64 -kernel arch/x86/boot/bzImage -boot c -m 2048M \
+    -drive file=../buildroot/output/images/rootfs.ext2,format=raw,index=0,media=disk
     -append "root=/dev/sda rw console=ttyS0,115200 acpi=off nokaslr" \
     -serial stdio -display none
 ```
@@ -254,7 +254,7 @@ Start the kernel with QEMU:
 
 ``` bash
 qemu-system-x86_64 -s -kernel arch/x86/boot/bzImage -boot c -m 2049M \
-    -hda ../buildroot/output/images/rootfs.ext2 \
+    -drive file=../buildroot/output/images/rootfs.ext2,format=raw,index=0,media=disk
     -append "root=/dev/sda rw console=ttyS0,115200 acpi=off nokaslr" \
     -serial stdio -display none
 ```
