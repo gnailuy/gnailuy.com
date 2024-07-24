@@ -137,14 +137,14 @@ References: [1][reference1], [2][reference2], [3][reference3].
 
 ``` bash
 # Build essentials and libraries
-sudo apt install bison build-essential ccache ctags fakeroot flex \
-    kernel-package libelf-dev libncurses5-dev libssl-dev
+sudo apt install bison flex build-essential ccache universal-ctags fakeroot \
+    libelf-dev libncurses-dev libssl-dev unzip dwarves
 
 # Development tools
 sudo apt install git gdb
 
 # QEMU emulator
-sudo apt install qemu qemu-system
+sudo apt install qemu-system
 ```
 
 ### Clone the kernel source code
