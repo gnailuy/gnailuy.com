@@ -5,8 +5,7 @@ entry_points:
   - hugo.yaml
   - layouts/_default/baseof.html
   - content/posts
-dependencies:
-  - .aidoc/verification.md
+dependencies: []
 ---
 
 # Site Architecture
@@ -18,6 +17,7 @@ The Hugo migration keeps Yuliang's published writing stable while replacing an u
 | Document | Relationship |
 |---|---|
 | [Verification](verification.md) | Proves the build, links, HTML, URLs, and responsive behavior |
+| [Deployment and Recovery](deployment.md) | Connects the immutable artifact to a rebuildable static host |
 | [INDEX](INDEX.md) | Documentation discovery and reading chains |
 
 ## Why Hugo Exists Here
@@ -46,8 +46,8 @@ The static `/404.html` page retains the legacy three-second redirect to `/archiv
 - Git MUST contain only author-provided image sources, not generated derivatives.
 - Authored Markdown MUST refer only to readable source image filenames.
 - Builds MUST happen outside the production VM and produce a self-contained `public/` artifact.
-- Staging at `test.gnailuy.com` MUST precede production promotion.
-- Production promotion MUST wait for Yuliang's explicit approval.
+- Production MUST consume only an immutable artifact from a successful default-branch workflow.
+- A candidate release MUST pass smoke validation before its activation is accepted.
 
 ## How the Site Works
 
