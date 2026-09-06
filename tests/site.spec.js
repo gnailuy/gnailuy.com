@@ -4,7 +4,7 @@ test('home and primary navigation are responsive', async ({ page }, testInfo) =>
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Blog posts' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible();
-  await expect(page.locator('.post-card')).toHaveCount(71);
+  await expect(page.locator('.post-card')).toHaveCount(72);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
   await page.screenshot({ path: testInfo.outputPath('home.png'), fullPage: true });
@@ -28,12 +28,12 @@ test('archive reaches a preserved post URL', async ({ page }, testInfo) => {
 
 test('math-enabled posts render inline and display LaTeX', async ({ page }, testInfo) => {
   await page.route(/(googletagmanager|googlesyndication|disqus)\./, route => route.abort());
-  await page.goto('/mathematics/2011/07/10/gsl-erlang-and-weibull-distribution/');
+  await page.goto('/mathematics/2026/09/06/asymptotic-notations/');
   await expect(page.locator('script[src*="mathjax@3"]')).toHaveCount(1);
   await expect(page.locator('mjx-container:not([display="true"])').first()).toBeVisible({ timeout: 15_000 });
   const displayMath = page.locator('mjx-container[display="true"]').first();
   await expect(displayMath).toBeVisible();
-  await page.screenshot({ path: testInfo.outputPath('math-inline.png') });
+  await page.screenshot({ path: testInfo.outputPath('math-inline.png'), fullPage: true });
   await displayMath.scrollIntoViewIfNeeded();
   await page.screenshot({ path: testInfo.outputPath('math-display.png') });
 });
