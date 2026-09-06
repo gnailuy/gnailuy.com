@@ -5,9 +5,7 @@ entry_points:
   - hugo.yaml
   - layouts/_default/baseof.html
   - content/posts
-dependencies:
-  - .aidoc/verification.md
-  - .aidoc/deployment.md
+dependencies: []
 ---
 
 # Site Architecture
