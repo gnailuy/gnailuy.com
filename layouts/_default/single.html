@@ -5,6 +5,6 @@
     <h1>{{ .Title }}</h1>
   </header>
   <div class="prose">{{ .Content }}</div>
-  {{ if eq .Section "posts" }}{{ partial "license.html" . }}{{ partial "ads.html" . }}{{ partial "comments.html" . }}{{ else if .Params.comments }}{{ partial "comments.html" . }}{{ end }}
+  {{ if eq .Section "posts" }}{{ partial "license.html" . }}{{ if eq .Site.Params.adsEnabled true }}{{ partial "ads.html" . }}{{ end }}{{ partial "comments.html" . }}{{ else if .Params.comments }}{{ partial "comments.html" . }}{{ end }}
 </article>
 {{ end }}
