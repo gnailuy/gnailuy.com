@@ -8,6 +8,7 @@ disableKinds:
   - taxonomy
   - term
 params:
+  adsEnabled: false
   author: Yuliang Jin
   authorMessage: A Developer
   authorEmail: eXVsaWFuZ0BnbmFpbHV5LmNvbQo=

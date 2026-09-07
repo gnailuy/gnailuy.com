@@ -19,7 +19,8 @@ test('archive reaches a preserved post URL', async ({ page }, testInfo) => {
   await expect(page.getByRole('heading', { name: 'Accept imperfectness' })).toBeVisible();
   await expect(page.locator('main')).toContainText('accept imperfectness');
   await expect(page.locator('script[src*="googletagmanager.com/gtag/js?id=G-LPP02XNH54"]')).toHaveCount(1);
-  await expect(page.locator('.adsbygoogle[data-ad-client="ca-pub-3373062932769749"][data-ad-slot="3716173942"]')).toHaveCount(1);
+  await expect(page.locator('.post-ad, .adsbygoogle')).toHaveCount(0);
+  await expect(page.locator('script[src*="pagead2.googlesyndication.com"]')).toHaveCount(0);
   await expect(page.locator('#disqus_thread')).toHaveCount(1);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);

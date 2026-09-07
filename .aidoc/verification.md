@@ -35,7 +35,7 @@ External links are not a blocking gate because many historical posts intentional
 
 `tests/site.spec.js` loads the built artifact at desktop and mobile viewports, checks primary navigation, verifies representative articles and generated error pages, proves authored image names produce responsive Hugo derivatives rather than legacy filenames, proves the legacy 404-to-archive redirect, and rejects horizontal page overflow. Playwright saves screenshots for inspection.
 
-The representative article check also asserts that the configured Google Analytics, responsive AdSense, and Disqus integration points are present without depending on successful third-party network responses. A math-enabled article proves that MathJax renders both inline and display LaTeX.
+The representative article check asserts that the configured Google Analytics and Disqus integration points are present without depending on successful third-party network responses. It also verifies that disabling `params.adsEnabled` removes the AdSense container and provider script. A math-enabled article proves that MathJax renders both inline and display LaTeX.
 
 ## How to Run the Gates
 

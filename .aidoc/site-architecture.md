@@ -34,7 +34,7 @@ The migration intentionally changes presentation but not publication identity. H
 
 `layouts/` contains a small custom theme instead of an external theme dependency. `static/css/main.css` uses fluid type, constrained reading width, responsive grids, overflow-safe tables and code, and reduced-motion handling.
 
-Google Analytics, the existing responsive AdSense placement, and Disqus remain template partials with their legacy identifiers. `layouts/_markup/render-image.html` resolves authored image paths against `assets/images/_fullsize/`, emits intrinsic dimensions and responsive candidates, and preserves the source filename as a fallback URL. Authors add and commit one source image; generated derivatives belong only to the deployable artifact.
+Google Analytics and Disqus remain template partials with their legacy identifiers. The responsive AdSense partial and identifiers remain available but render only when `params.adsEnabled` is true; disabling the switch removes both the ad container and provider script so unfilled inventory cannot leave blank space. `layouts/_markup/render-image.html` resolves authored image paths against `assets/images/_fullsize/`, emits intrinsic dimensions and responsive candidates, and preserves the source filename as a fallback URL. Authors add and commit one source image; generated derivatives belong only to the deployable artifact.
 
 Hugo natively treats `<!--more-->` as the summary divider, so the 69 migrated manual dividers retain their established excerpts without a custom plugin. New posts may instead set an explicit front-matter `summary` when a marker inside the body would be awkward.
 
