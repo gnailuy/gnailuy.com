@@ -45,6 +45,6 @@ CI uploads browser screenshots even when a scenario fails. A release reviewer sh
 
 ## What the Default-Branch Artifact Contains
 
-Pull-request runs stop after verification and never publish a deployable artifact. A successful push to `master` runs `package_release.build_bundle` against the already-tested `public/` directory and uploads exactly one `site-release-<full-sha>` artifact.
+Pull-request runs stop after verification and never publish a deployable artifact. A successful push to `master`, or an explicitly dispatched `master` verification run, runs `package_release.build_bundle` against the already-tested `public/` directory and uploads exactly one `site-release-<full-sha>` artifact.
 
 The release ZIP contains one deterministic `gnailuy.com-<full-sha>.tar.gz`, its SHA-256 checksum, and `manifest.json` binding the archive to the repository, workflow run, and head commit. Githook independently verifies those values before extraction or activation.

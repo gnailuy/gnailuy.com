@@ -2,6 +2,7 @@ name: Verify site
 on:
   pull_request:
   push:
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -25,7 +26,7 @@ jobs:
       - name: Test release packaging
         run: python3 -m unittest tests/test_package_release.py
       - name: Package immutable site release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         run: |
           SOURCE_DATE_EPOCH="$(git show -s --format=%ct "$GITHUB_SHA")" \
             python3 scripts/package_release.py \
@@ -35,7 +36,7 @@ jobs:
               --run-id "$GITHUB_RUN_ID" \
               --sha "$GITHUB_SHA"
       - name: Upload immutable site release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         uses: actions/upload-artifact@v7
         with:
           name: site-release-${{ github.sha }}
