@@ -6,8 +6,8 @@ categories:
 - me
 ---
 
-I use these checklists to make the beginning, ending, and handoff of a project explicit.
-They are notes to myself, not a new productivity system.
+I keep these checklists in my Logseq system.
+I use them to make the beginning, ending, and handoff of a project explicit.
 
 <!--more-->
 
@@ -28,7 +28,7 @@ They are notes to myself, not a new productivity system.
 - Mark the project and its tasks complete on every platform.
 - If the project is inactive rather than complete, add its current status before archiving it.
 - Remember that constant progress is unnecessary. Be honest when a project is stalled, and wrap it up so it can be resumed later.
-- Check `#OKR` and mark the key result complete when applicable.
+- Check my OKR page in Logseq and mark the key result complete when applicable.
 - Communicate with stakeholders.
 - Evaluate the success criteria.
 - Identify useful intermediate packets of work and turn them into pages.
@@ -43,4 +43,6 @@ Record:
 - Details I am likely to forget.
 - My intention for the next session.
 
-The point is not constant progress. It is leaving the project in a state that I can understand and resume.
+The point is not constant progress.
+Writing these things down helps me leave the project in a state that I can understand and resume.
+This is especially helpful for me because I have ADHD.
