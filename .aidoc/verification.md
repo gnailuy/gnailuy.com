@@ -33,15 +33,15 @@ External links are not a blocking gate because many historical posts intentional
 
 `html-validate` checks every generated HTML file. The configuration relaxes presentational rules that conflict with historical article HTML while retaining document, nesting, attribute, and accessibility-oriented checks.
 
-`tests/site.spec.js` loads the built artifact at desktop and mobile viewports, checks primary navigation, verifies representative articles and generated error pages, proves authored image names produce responsive Hugo derivatives rather than legacy filenames, proves the legacy 404-to-archive redirect, and rejects horizontal page overflow. Playwright saves screenshots for inspection.
+`tests/site.spec.js` keeps browser coverage proportional to a personal static blog. One durable smoke scenario follows the newest home-page post through the archive to its article at desktop and mobile widths, so publishing a post never requires changing a hard-coded count or title. Focused scenarios prove MathJax rendering and the legacy error-page redirect once on desktop, while the custom responsive-image pipeline is exercised once at the narrow mobile viewport.
 
-The representative article check asserts that the configured Google Analytics and Disqus integration points are present without depending on successful third-party network responses. It also verifies that disabling `params.adsEnabled` removes the AdSense container and provider script. A math-enabled article proves that MathJax renders both inline and display LaTeX.
+Playwright rejects horizontal overflow in the representative page and image paths. Successful runs retain only the home and article screenshots used for responsive review; failed scenarios capture their current page automatically. Exact post counts, historical article copy, third-party analytics/comment script presence, disabled advertising markup, duplicate viewport checks for viewport-independent behavior, and legacy generated image filenames are intentionally not test contracts.
 
 ## How to Run the Gates
 
 Run `hugo --minify --gc`, then `npm test`. For browser-only iteration, run `npm run test:browser`; Playwright starts a local server from `public/`.
 
-CI uploads browser screenshots even when a scenario fails. A release reviewer should inspect both desktop and mobile captures before staging the artifact.
+CI uploads the representative browser screenshots and any failure captures. A release reviewer should inspect both desktop and mobile home/article captures after presentation changes; ordinary content additions require no test-source edits.
 
 ## What the Default-Branch Artifact Contains
 
