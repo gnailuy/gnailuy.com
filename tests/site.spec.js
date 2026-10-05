@@ -4,7 +4,7 @@ test('home and primary navigation are responsive', async ({ page }, testInfo) =>
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Blog posts' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible();
-  await expect(page.locator('.post-card')).toHaveCount(72);
+  await expect(page.locator('.post-card')).toHaveCount(73);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
   await page.screenshot({ path: testInfo.outputPath('home.png'), fullPage: true });
