@@ -8,7 +8,7 @@ module.exports = defineConfig({
   reporter: 'line',
   use: {
     baseURL: process.env.BASE_URL || 'http://127.0.0.1:4173',
-    screenshot: 'on',
+    screenshot: 'only-on-failure',
     trace: 'retain-on-failure',
     launchOptions: executablePath ? { executablePath } : {}
   },
